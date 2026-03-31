@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemie – Maturitní Poznámky | LF</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Sans+3:wght@300;400;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #faf8f3;
+    --card: #ffffff;
+    --ink: #1a1a2e;
+    --muted: #6b6b80;
+    --border: #e8e4da;
+    
+    /* Accent palette */
+    --red:    #c0392b;
+    --orange: #e67e22;
+    --yellow: #f1c40f;
+    --green:  #27ae60;
+    --teal:   #16a085;
+    --blue:   #2980b9;
+    --purple: #8e44ad;
+    --pink:   #e91e8c;
+    
+    --red-bg:    #fdf2f2;
+    --orange-bg: #fef6ed;
+    --yellow-bg: #fefce8;
+    --green-bg:  #f0fdf4;
+    --teal-bg:   #f0fdfa;
+    --blue-bg:   #eff6ff;
+    --purple-bg: #faf5ff;
+    --pink-bg:   #fdf2f8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+  }
+
+  /* ── COVER PAGE ── */
+  .cover {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cover-molecule {
+    font-size: 90px;
+    margin-bottom: 20px;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(42px, 8vw, 80px);
+    color: #fff;
+    letter-spacing: -1px;
+    line-height: 1.1;
+  }
+  .cover h1 span { color: #f1c40f; }
+  .cover-sub {
+    font-size: 20px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 16px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .cover-badges {
+    display: flex; gap: 12px; flex-wrap: wrap;
+    justify-content: center; margin-top: 36px;
+  }
+  .badge {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    backdrop-filter: blur(4px);
+  }
+  .cover-toc {
+    margin-top: 50px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px; max-width: 700px;
+  }
+  .cover-toc a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.12);
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: all .2s;
+  }
+  .cover-toc a:hover { background: rgba(255,255,255,0.15); }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 980px; margin: 0 auto; padding: 40px 24px 100px; }
+
+  /* ── CHAPTER HEADERS ── */
+  .chapter {
+    margin-top: 70px;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .chapter-header {
+    padding: 28px 36px;
+    display: flex; align-items: center; gap: 18px;
+  }
+  .chapter-header .icon { font-size: 36px; }
+  .chapter-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: #fff;
+  }
+  .chapter-header .num {
+    font-size: 13px; letter-spacing: 3px; text-transform: uppercase;
+    color: rgba(255,255,255,0.6); margin-bottom: 4px;
+  }
+  .ch-anorg .chapter-header { background: linear-gradient(135deg, #1a1a2e, #16213e); }
+  .ch-org   .chapter-header { background: linear-gradient(135deg, #1b4332, #2d6a4f); }
+  .ch-bio   .chapter-header { background: linear-gradient(135deg, #4a1942, #722f8b); }
+
+  .chapter-body { padding: 36px 36px; background: var(--card); }
+
+  /* ── SECTION ── */
+  .section { margin-top: 40px; }
+  .section:first-child { margin-top: 0; }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--border);
+  }
+  h4 {
+    font-size: 16px;
+    font-weight: 700;
+    margin: 18px 0 8px;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+  }
+
+  /* ── CARDS ── */
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 16px 0; }
+  .card {
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid;
+  }
+  .card h4 { margin-top: 0; font-size: 14px; }
+  .card p, .card li { font-size: 14px; }
+
+  .card-red    { background: var(--red-bg);    border-color: #fca5a5; }
+  .card-orange { background: var(--orange-bg); border-color: #fdba74; }
+  .card-yellow { background: var(--yellow-bg); border-color: #fde047; }
+  .card-green  { background: var(--green-bg);  border-color: #86efac; }
+  .card-teal   { background: var(--teal-bg);   border-color: #5eead4; }
+  .card-blue   { background: var(--blue-bg);   border-color: #93c5fd; }
+  .card-purple { background: var(--purple-bg); border-color: #d8b4fe; }
+  .card-pink   { background: var(--pink-bg);   border-color: #f9a8d4; }
+
+  .card h4.red    { color: var(--red); }
+  .card h4.orange { color: var(--orange); }
+  .card h4.yellow { color: #b45309; }
+  .card h4.green  { color: var(--green); }
+  .card h4.teal   { color: var(--teal); }
+  .card h4.blue   { color: var(--blue); }
+  .card h4.purple { color: var(--purple); }
+  .card h4.pink   { color: var(--pink); }
+
+  /* ── FORMULA BOX ── */
+  .formula-box {
+    background: #0f0c29;
+    color: #e8d5ff;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 14px 0;
+    font-family: 'Fira Code', monospace;
+    font-size: 15px;
+    line-height: 2;
+    border-left: 4px solid #8e44ad;
+  }
+  .formula-box .label {
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #9b72cf;
+    margin-bottom: 8px;
+  }
+  .f-name { color: #f1c40f; font-weight: 500; }
+  .f-form { color: #7dd3fc; }
+  .f-note { color: rgba(255,255,255,0.45); font-size: 12px; }
+
+  /* ── HIGHLIGHT ── */
+  .hl-red    { background: #fee2e2; color: #991b1b; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-blue   { background: #dbeafe; color: #1e40af; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-green  { background: #dcfce7; color: #166534; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-orange { background: #ffedd5; color: #9a3412; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-purple { background: #f3e8ff; color: #6b21a8; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-teal   { background: #ccfbf1; color: #134e4a; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+  .hl-yellow { background: #fef9c3; color: #713f12; padding: 2px 6px; border-radius: 4px; font-weight: 600; }
+
+  /* ── ALERT BOX ── */
+  .alert {
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin: 14px 0;
+    display: flex; gap: 12px; align-items: flex-start;
+    font-size: 14px;
+  }
+  .alert .ico { font-size: 20px; flex-shrink: 0; }
+  .alert-red    { background: var(--red-bg);    border-left: 4px solid var(--red); }
+  .alert-blue   { background: var(--blue-bg);   border-left: 4px solid var(--blue); }
+  .alert-green  { background: var(--green-bg);  border-left: 4px solid var(--green); }
+  .alert-orange { background: var(--orange-bg); border-left: 4px solid var(--orange); }
+  .alert-purple { background: var(--purple-bg); border-left: 4px solid var(--purple); }
+
+  /* ── TABLE ── */
+  .tbl { width: 100%; border-collapse: collapse; margin: 14px 0; font-size: 14px; border-radius: 10px; overflow: hidden; box-shadow: 0 1px 8px rgba(0,0,0,0.07); }
+  .tbl th { background: var(--ink); color: #fff; padding: 12px 16px; text-align: left; font-weight: 600; font-size: 13px; }
+  .tbl td { padding: 10px 16px; border-bottom: 1px solid var(--border); }
+  .tbl tr:last-child td { border-bottom: none; }
+  .tbl tr:nth-child(even) td { background: #f8f7f3; }
+  .tbl tr:hover td { background: #f0ede4; }
+
+  /* ── ORGANIC CHAIN VISUAL ── */
+  .chain-vis {
+    background: #f8faff;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Fira Code', monospace;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+  .chain-vis .chain-row { white-space: pre; font-size: 14px; line-height: 1.8; color: var(--ink); }
+  .chain-vis .chain-label { font-family: 'Source Sans 3', sans-serif; font-size: 12px; color: var(--muted); margin-top: 8px; }
+
+  /* ── PERIODIC ELEMENT ── */
+  .elem-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .elem {
+    width: 64px; height: 72px;
+    border-radius: 8px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    font-family: 'Fira Code', monospace;
+    text-align: center;
+    border: 1px solid rgba(0,0,0,0.1);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  }
+  .elem .en { font-size: 10px; color: rgba(255,255,255,0.7); }
+  .elem .sym { font-size: 22px; font-weight: 700; color: #fff; line-height: 1; }
+  .elem .nm  { font-size: 9px; color: rgba(255,255,255,0.8); }
+  .elem-s  { background: linear-gradient(135deg, #e67e22, #d35400); }
+  .elem-p  { background: linear-gradient(135deg, #2980b9, #1a5276); }
+  .elem-d  { background: linear-gradient(135deg, #27ae60, #1e8449); }
+  .elem-f  { background: linear-gradient(135deg, #8e44ad, #6c3483); }
+  .elem-h  { background: linear-gradient(135deg, #7f8c8d, #566573); }
+
+  /* ── REACTION ARROW ── */
+  .reaction {
+    font-family: 'Fira Code', monospace;
+    font-size: 15px;
+    background: #fafafa;
+    border: 1px solid #e8e4da;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin: 10px 0;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .reaction .reac { color: #2980b9; font-weight: 500; }
+  .reaction .prod { color: #27ae60; font-weight: 500; }
+  .reaction .arr  { color: #e67e22; margin: 0 8px; }
+  .reaction .cond { font-size: 12px; color: var(--muted); }
+
+  /* ── HOMOLOGOUS SERIES TABLE ── */
+  .homo-table { font-size: 13px; }
+  .homo-table th:first-child { width: 40px; text-align: center; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+  }
+  .divider::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 0; right: 0;
+    height: 1px;
+    background: var(--border);
+  }
+  .divider span {
+    background: var(--card);
+    padding: 0 16px;
+    color: var(--muted);
+    font-size: 13px;
+    position: relative;
+  }
+
+  /* ── FUNCTIONAL GROUP BADGE ── */
+  .fg-badge {
+    display: inline-flex;
+    align-items: center; gap: 6px;
+    background: var(--ink);
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-family: 'Fira Code', monospace;
+    font-size: 13px;
+    margin: 3px;
+  }
+  .fg-badge.red    { background: var(--red); }
+  .fg-badge.orange { background: var(--orange); }
+  .fg-badge.green  { background: var(--green); }
+  .fg-badge.teal   { background: var(--teal); }
+  .fg-badge.blue   { background: var(--blue); }
+  .fg-badge.purple { background: var(--purple); }
+  .fg-badge.pink   { background: var(--pink); }
+
+  /* ── MEMORY AIDS ── */
+  .memory {
+    background: linear-gradient(135deg, #fff7ed, #fffbeb);
+    border: 1px solid #fed7aa;
+    border-radius: 12px;
+    padding: 16px 20px;
+    margin: 14px 0;
+  }
+  .memory .mem-title { font-size: 12px; color: #c2410c; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 6px; }
+  .memory p { font-size: 14px; }
+  .memory strong { color: var(--orange); }
+
+  /* ── TWO COLS ── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 14px 0; }
+  @media(max-width: 600px) { .two-col { grid-template-columns: 1fr; } .cards { grid-template-columns: 1fr; } }
+
+  /* ── PRINT ── */
+  @media print {
+    .cover { min-height: auto; padding: 40px; }
+    .chapter { break-inside: avoid; }
+  }
+
+  /* ── SCROLL ── */
+  html { scroll-behavior: smooth; }
+
+  /* ── LIST STYLE ── */
+  ul { padding-left: 20px; }
+  li { margin-bottom: 4px; }
+
+  /* ── SUBTITLE ── */
+  .subtitle {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  /* ── SVG DIAGRAMS ── */
+  .diagram-wrap {
+    text-align: center;
+    margin: 16px 0;
+    background: #f8f9fc;
+    border-radius: 14px;
+    padding: 20px;
+    border: 1px solid #e2e8f0;
+  }
+  .diagram-wrap figcaption {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 10px;
+    font-style: italic;
+  }
+</style>
+</head>
+<body>
+
+<!-- ████████ COVER ████████ -->
+<div class="cover">
+  <div class="cover-molecule">⚗️</div>
+  <h1>Chemie<br><span>Maturita & LF</span></h1>
+  <p class="cover-sub">Anorganická · Organická · Biochemie</p>
+  <div class="cover-badges">
+    <span class="badge">🧪 Vzorce</span>
+    <span class="badge">🎨 Barevné přehledy</span>
+    <span class="badge">📚 Kompletní látka</span>
+    <span class="badge">🏫 LF připravenost</span>
+  </div>
+  <div class="cover-toc">
+    <a href="#anorg">🔵 Anorganická chemie</a>
+    <a href="#org">🟢 Organická chemie</a>
+    <a href="#uhlovodiky">Uhlovodíky</a>
+    <a href="#derivaty">Deriváty</a>
+    <a href="#biomol">Biomolekuly</a>
+    <a href="#reakce">Typy reakcí</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ████████ I. ANORGANICKÁ CHEMIE ████████ -->
+<div class="chapter ch-anorg" id="anorg">
+  <div class="chapter-header">
+    <span class="icon">🔵</span>
+    <div>
+      <div class="num">Kapitola I</div>
+      <h2>Anorganická chemie</h2>
+    </div>
+  </div>
+  <div class="chapter-body">
+
+    <!-- 1.1 Stavba atomu -->
+    <div class="section" id="atom">
+      <h3>1.1 Stavba atomu & Periodická soustava prvků</h3>
+      <div class="two-col">
+        <div>
+          <div class="card card-blue">
+            <h4 class="blue">⚛️ Základní pojmy</h4>
+            <ul>
+              <li><span class="hl-blue">Proton</span> – kladně nabitý, v jádře, p⁺</li>
+              <li><span class="hl-red">Neutron</span> – bez náboje, v jádře, n⁰</li>
+              <li><span class="hl-green">Elektron</span> – záporně nabitý, obal, e⁻</li>
+              <li><strong>Protonové číslo Z</strong> = počet protonů</li>
+              <li><strong>Nukleonové číslo A</strong> = p + n</li>
+              <li><strong>Izotopy</strong> = stejné Z, různé A</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card card-purple">
+            <h4 class="purple">📋 Elektronová konfigurace</h4>
+            <ul>
+              <li>Orbitaly: <span class="hl-purple">s, p, d, f</span></li>
+              <li>s – max 2e, p – max 6e, d – max 10e, f – max 14e</li>
+              <li>Aufbauův princip: obsazuj od nejnižší energie</li>
+              <li>Pauliho zákaz: v orbitalu max 2e, opačný spin</li>
+              <li>Hundovo pravidlo: nejprve 1e do každého orbitalu</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <div class="label">Příklady el. konfigurací – důležité pro maturitu</div>
+        <span class="f-name">H  (Z=1)</span>  <span class="f-form">1s¹</span><br>
+        <span class="f-name">C  (Z=6)</span>  <span class="f-form">1s² 2s² 2p²</span><br>
+        <span class="f-name">N  (Z=7)</span>  <span class="f-form">1s² 2s² 2p³</span><br>
+        <span class="f-name">O  (Z=8)</span>  <span class="f-form">1s² 2s² 2p⁴</span><br>
+        <span class="f-name">Na (Z=11)</span> <span class="f-form">1s² 2s² 2p⁶ 3s¹</span><br>
+        <span class="f-name">Cl (Z=17)</span> <span class="f-form">1s² 2s² 2p⁶ 3s² 3p⁵</span><br>
+        <span class="f-name">Fe (Z=26)</span> <span class="f-form">1s² 2s² 2p⁶ 3s² 3p⁶ 3d⁶ 4s²</span> <span class="f-note">← d-prvek!</span>
+      </div>
+
+      <div class="alert alert-orange">
+        <span class="ico">⚡</span>
+        <div>Výjimky z Aufbauova principu: <strong>Cr</strong> [Ar] 3d⁵ 4s¹ a <strong>Cu</strong> [Ar] 3d¹⁰ 4s¹ – poloaplněné/aplněné d-orbitaly jsou stabilnější!</div>
+      </div>
+
+      <!-- PSP - Trendy -->
+      <h4>Trendy v Periodické soustavě prvků</h4>
+      <table class="tbl">
+        <tr><th>Vlastnost</th><th>→ ve skupině (↓)</th><th>→ v periodě (→)</th></tr>
+        <tr><td><strong>Atomový poloměr</strong></td><td>roste ↑</td><td>klesá ↓</td></tr>
+        <tr><td><strong>Elektronegativita</strong></td><td>klesá ↓</td><td>roste ↑</td></tr>
+        <tr><td><strong>Ionizační energie</strong></td><td>klesá ↓</td><td>roste ↑</td></tr>
+        <tr><td><strong>Elektronová afinita</strong></td><td>klesá (většinou)</td><td>roste ↑</td></tr>
+        <tr><td><strong>Kovový charakter</strong></td><td>roste ↑</td><td>klesá ↓</td></tr>
+      </table>
+
+      <div class="elem-grid">
+        <div class="elem elem-s"><span class="en">1</span><span class="sym">H</span><span class="nm">vodík</span></div>
+        <div class="elem elem-s"><span class="en">11</span><span class="sym">Na</span><span class="nm">sodík</span></div>
+        <div class="elem elem-s"><span class="en">19</span><span class="sym">K</span><span class="nm">draslík</span></div>
+        <div class="elem elem-s"><span class="en">20</span><span class="sym">Ca</span><span class="nm">vápník</span></div>
+        <div class="elem elem-p"><span class="en">6</span><span class="sym">C</span><span class="nm">uhlík</span></div>
+        <div class="elem elem-p"><span class="en">7</span><span class="sym">N</span><span class="nm">dusík</span></div>
+        <div class="elem elem-p"><span class="en">8</span><span class="sym">O</span><span class="nm">kyslík</span></div>
+        <div class="elem elem-p"><span class="en">17</span><span class="sym">Cl</span><span class="nm">chlor</span></div>
+        <div class="elem elem-d"><span class="en">26</span><span class="sym">Fe</span><span class="nm">železo</span></div>
+        <div class="elem elem-d"><span class="en">29</span><span class="sym">Cu</span><span class="nm">měď</span></div>
+        <div class="elem elem-d"><span class="en">30</span><span class="sym">Zn</span><span class="nm">zinek</span></div>
+        <div class="elem elem-f"><span class="en">92</span><span class="sym">U</span><span class="nm">uran</span></div>
+      </div>
+    </div>
+
+    <div class="divider"><span>Chemická vazba</span></div>
+
+    <!-- 1.2 Chemická vazba -->
+    <div class="section" id="vazba">
+      <h3>1.2 Chemická vazba</h3>
+      <div class="cards">
+        <div class="card card-blue">
+          <h4 class="blue">🔗 Kovalentní vazba</h4>
+          <ul>
+            <li>Sdílení elektronového páru</li>
+            <li>Nepolární: H–H, Cl–Cl (stejná EN)</li>
+            <li>Polární: H–Cl, H–O (různá EN)</li>
+            <li>Jednoduchá σ, dvojná π+σ, trojná 2π+σ</li>
+          </ul>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">⚡ Iontová vazba</h4>
+          <ul>
+            <li>Přenos elektronu (kov → nekov)</li>
+            <li>Rozdíl EN &gt; 1,7</li>
+            <li>Krystalická mříž</li>
+            <li>NaCl, KBr, CaO, MgO</li>
+          </ul>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">🤝 Kovová vazba</h4>
+          <ul>
+            <li>„Moře" delokalizovaných elektronů</li>
+            <li>Výborná vodivost, kujnost</li>
+            <li>Fe, Cu, Al, Au, Ag…</li>
+          </ul>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">🧲 Mezimolekulové síly</h4>
+          <ul>
+            <li><span class="hl-purple">Vodíkové můstky</span>: N–H, O–H, F–H → voda, bílkoviny, DNA!</li>
+            <li>van der Waalsovy síly</li>
+            <li>Dipól–dipól</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-red">
+        <span class="ico">🎯</span>
+        <div><strong>Klíčové pro LF!</strong> Vodíkové můstky udržují dvojšroubovici DNA, strukturu proteinů (α-helix, β-sheet) a jsou klíčem k vlastnostem vody jako rozpouštědla.</div>
+      </div>
+    </div>
+
+    <div class="divider"><span>Názvosloví anorganických sloučenin</span></div>
+
+    <!-- 1.3 Názvosloví -->
+    <div class="section" id="nazvoslovi">
+      <h3>1.3 Názvosloví anorganických sloučenin</h3>
+
+      <h4>Oxidy</h4>
+      <div class="formula-box">
+        <div class="label">Obecný vzorec: prvek + O — koncovka -ový oxide nebo oxide + název prvku</div>
+        <span class="f-name">CO</span>   <span class="f-form">oxid uhelnatý</span> <span class="f-note">→ jedovatý!</span><br>
+        <span class="f-name">CO₂</span>  <span class="f-form">oxid uhličitý</span> <span class="f-note">→ skleníkový plyn</span><br>
+        <span class="f-name">SO₂</span>  <span class="f-form">oxid siřičitý</span> <span class="f-note">→ kyselé deště</span><br>
+        <span class="f-name">SO₃</span>  <span class="f-form">oxid sírový</span><br>
+        <span class="f-name">NO</span>   <span class="f-form">oxid dusnatý</span><br>
+        <span class="f-name">NO₂</span>  <span class="f-form">oxid dusičitý</span> <span class="f-note">→ hnědý plyn</span><br>
+        <span class="f-name">N₂O₅</span> <span class="f-form">oxid dusičný</span><br>
+        <span class="f-name">P₂O₅</span> <span class="f-form">oxid fosforečný</span><br>
+        <span class="f-name">Fe₂O₃</span><span class="f-form">oxid železitý</span> <span class="f-note">→ rez</span><br>
+        <span class="f-name">FeO</span>  <span class="f-form">oxid železnatý</span><br>
+        <span class="f-name">CaO</span>  <span class="f-form">oxid vápenatý</span> <span class="f-note">→ pálené vápno</span><br>
+        <span class="f-name">Na₂O</span> <span class="f-form">oxid sodný</span>
+      </div>
+
+      <h4>Kyseliny (důležité!)</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Poznámka</th></tr>
+        <tr><td class="f-form"><strong>HCl</strong></td><td>kyselina chlorovodíková</td><td>solná kyselina, HCl(g) = chlorovodík</td></tr>
+        <tr><td class="f-form"><strong>HBr</strong></td><td>kyselina bromovodíková</td><td></td></tr>
+        <tr><td class="f-form"><strong>HI</strong></td><td>kyselina jodovodíková</td><td></td></tr>
+        <tr><td class="f-form"><strong>HF</strong></td><td>kyselina fluorovodíková</td><td>leptá sklo!</td></tr>
+        <tr><td class="f-form"><strong>H₂S</strong></td><td>kyselina sirovodíková</td><td>pach hnilých vajec</td></tr>
+        <tr><td class="f-form"><strong>H₂SO₄</strong></td><td>kyselina sírová</td><td>silná, dvojsytná, oleum</td></tr>
+        <tr><td class="f-form"><strong>H₂SO₃</strong></td><td>kyselina siřičitá</td><td>slabá</td></tr>
+        <tr><td class="f-form"><strong>HNO₃</strong></td><td>kyselina dusičná</td><td>silná oxidační</td></tr>
+        <tr><td class="f-form"><strong>HNO₂</strong></td><td>kyselina dusitá</td><td>slabá, nestálá</td></tr>
+        <tr><td class="f-form"><strong>H₃PO₄</strong></td><td>kyselina fosforečná</td><td>trojsytná, slabá</td></tr>
+        <tr><td class="f-form"><strong>H₂CO₃</strong></td><td>kyselina uhličitá</td><td>slabá, nestálá → CO₂ + H₂O</td></tr>
+        <tr><td class="f-form"><strong>HClO</strong></td><td>kyselina chlorná</td><td>dezinfekce, bělení</td></tr>
+        <tr><td class="f-form"><strong>HClO₃</strong></td><td>kyselina chlorečná</td><td></td></tr>
+        <tr><td class="f-form"><strong>HClO₄</strong></td><td>kyselina chloristá</td><td>nejsilnější anorganická</td></tr>
+        <tr><td class="f-form"><strong>H₃BO₃</strong></td><td>kyselina boritá</td><td>slabá, antiseptikum</td></tr>
+        <tr><td class="f-form"><strong>HCN</strong></td><td>kyselina kyanovodíková</td><td>pruský jed! slabá</td></tr>
+      </table>
+
+      <h4>Hydroxidy (zásady)</h4>
+      <div class="formula-box">
+        <div class="label">Vzorec: Me(OH)ₙ — název: hydroxid + název kovu (případně mocenství)</div>
+        <span class="f-name">NaOH</span>  <span class="f-form">hydroxid sodný</span>  <span class="f-note">→ louh sodný, silná zásada</span><br>
+        <span class="f-name">KOH</span>   <span class="f-form">hydroxid draselný</span><span class="f-note">→ louh draselný</span><br>
+        <span class="f-name">Ca(OH)₂</span><span class="f-form">hydroxid vápenatý</span><span class="f-note">→ hašené vápno</span><br>
+        <span class="f-name">Mg(OH)₂</span><span class="f-form">hydroxid hořečnatý</span><span class="f-note">→ magnézia (lék)</span><br>
+        <span class="f-name">Al(OH)₃</span><span class="f-form">hydroxid hlinitý</span>  <span class="f-note">→ amfoterní!</span><br>
+        <span class="f-name">Fe(OH)₂</span><span class="f-form">hydroxid železnatý</span><span class="f-note">→ Fe²⁺</span><br>
+        <span class="f-name">Fe(OH)₃</span><span class="f-form">hydroxid železitý</span> <span class="f-note">→ Fe³⁺, hnědá sraženina</span><br>
+        <span class="f-name">NH₃·H₂O</span><span class="f-form">hydroxid amonný</span>  <span class="f-note">→ slabá zásada</span>
+      </div>
+
+      <h4>Soli – vzorce a názvy</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Využití</th></tr>
+        <tr><td><strong>NaCl</strong></td><td>chlorid sodný</td><td>kuchyňská sůl</td></tr>
+        <tr><td><strong>KCl</strong></td><td>chlorid draselný</td><td>hnojivo</td></tr>
+        <tr><td><strong>CaCO₃</strong></td><td>uhličitan vápenatý</td><td>vápenec, mramor</td></tr>
+        <tr><td><strong>Na₂CO₃</strong></td><td>uhličitan sodný</td><td>soda, výroba skla</td></tr>
+        <tr><td><strong>NaHCO₃</strong></td><td>hydrogenuhličitan sodný</td><td>jedlá soda</td></tr>
+        <tr><td><strong>CaSO₄</strong></td><td>síran vápenatý</td><td>sádra (·2H₂O = sádrovec)</td></tr>
+        <tr><td><strong>Na₂SO₄</strong></td><td>síran sodný</td><td>Glauberova sůl (·10H₂O)</td></tr>
+        <tr><td><strong>FeSO₄</strong></td><td>síran železnatý</td><td>zelená skalice (·7H₂O)</td></tr>
+        <tr><td><strong>CuSO₄</strong></td><td>síran měďnatý</td><td>modrá skalice (·5H₂O)</td></tr>
+        <tr><td><strong>KNO₃</strong></td><td>dusičnan draselný</td><td>ledek draselný, střelný prach</td></tr>
+        <tr><td><strong>Ca₃(PO₄)₂</strong></td><td>fosforečnan vápenatý</td><td>kosti, zuby!</td></tr>
+        <tr><td><strong>NaOH·HCl → NaCl + H₂O</strong></td><td>neutralizace</td><td>→ vznik soli + vody</td></tr>
+        <tr><td><strong>NH₄Cl</strong></td><td>chlorid amonný</td><td>čpavková sůl</td></tr>
+        <tr><td><strong>K₂Cr₂O₇</strong></td><td>dichroman draselný</td><td>oxidační činidlo</td></tr>
+        <tr><td><strong>KMnO₄</strong></td><td>manganistan draselný</td><td>Chameleon, dezinfekce</td></tr>
+      </table>
+    </div>
+
+    <div class="divider"><span>Reakce a rovnováha</span></div>
+
+    <!-- 1.4 Kyseliny a zásady -->
+    <div class="section" id="kyseliny">
+      <h3>1.4 Kyseliny, zásady, pH</h3>
+      <div class="cards">
+        <div class="card card-red">
+          <h4 class="red">Brønstedova teorie</h4>
+          <ul>
+            <li><span class="hl-red">Kyselina</span> = donor protonu (H⁺)</li>
+            <li><span class="hl-blue">Zásada</span> = akceptor protonu (H⁺)</li>
+            <li>Konjugovaný pár: HCl / Cl⁻, NH₄⁺ / NH₃</li>
+          </ul>
+        </div>
+        <div class="card card-teal">
+          <h4 class="teal">Lewisova teorie</h4>
+          <ul>
+            <li>Kyselina = akceptor e⁻ páru</li>
+            <li>Zásada = donor e⁻ páru</li>
+            <li>Zahrnuje i bezprotonové kyseliny</li>
+          </ul>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">Arrhenius</h4>
+          <ul>
+            <li>Kyselina → H⁺ ve vodě</li>
+            <li>Zásada → OH⁻ ve vodě</li>
+            <li>Nejstarší, nejjednodušší</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="formula-box">
+        <div class="label">pH a pOH – klíčové vzorce</div>
+        <span class="f-form">pH = −log[H₃O⁺]</span><br>
+        <span class="f-form">pOH = −log[OH⁻]</span><br>
+        <span class="f-form">pH + pOH = 14  (při 25 °C)</span><br>
+        <span class="f-form">Kw = [H⁺][OH⁻] = 10⁻¹⁴</span>
+      </div>
+
+      <table class="tbl">
+        <tr><th>pH</th><th>Charakter</th><th>Příklad</th></tr>
+        <tr><td style="color:var(--red);font-weight:700">0–2</td><td>Silně kyselý</td><td>HCl(konc.), žaludeční šťáva (1,5–3,5)</td></tr>
+        <tr><td style="color:var(--orange);font-weight:700">3–6</td><td>Kyselý</td><td>ocet (~3), káva (~5)</td></tr>
+        <tr><td style="color:var(--green);font-weight:700">7</td><td>Neutrální</td><td>čistá voda</td></tr>
+        <tr><td style="color:var(--teal);font-weight:700">8–11</td><td>Zásaditý</td><td>krev (7,35–7,45!), mýdlo (~10)</td></tr>
+        <tr><td style="color:var(--blue);font-weight:700">12–14</td><td>Silně zásaditý</td><td>NaOH(konc.)</td></tr>
+      </table>
+
+      <div class="alert alert-red">
+        <span class="ico">🩸</span>
+        <div><strong>LF klíč!</strong> pH krve = <strong>7,35–7,45</strong>. Acidóza &lt;7,35, Alkalóza &gt;7,45. Regulují: plíce (CO₂) + ledviny (HCO₃⁻). Pufr: HCO₃⁻/H₂CO₃.</div>
+      </div>
+    </div>
+
+    <div class="divider"><span>Redoxní reakce</span></div>
+
+    <!-- 1.5 Redox -->
+    <div class="section" id="redox">
+      <h3>1.5 Redoxní reakce</h3>
+      <div class="two-col">
+        <div class="card card-red">
+          <h4 class="red">🔥 Oxidace</h4>
+          <ul>
+            <li>Látka <strong>ztrácí</strong> elektrony</li>
+            <li>Oxidační číslo <strong>stoupá</strong></li>
+            <li>Látka se oxiduje → je <span class="hl-red">reduktant</span></li>
+          </ul>
+        </div>
+        <div class="card card-blue">
+          <h4 class="blue">❄️ Redukce</h4>
+          <ul>
+            <li>Látka <strong>přijímá</strong> elektrony</li>
+            <li>Oxidační číslo <strong>klesá</strong></li>
+            <li>Látka se redukuje → je <span class="hl-blue">oxidant</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="memory">
+        <div class="mem-title">🧠 Mnemotechnika</div>
+        <p><strong>OIL RIG</strong> – <strong>O</strong>xidation <strong>I</strong>s <strong>L</strong>oss (of e⁻), <strong>R</strong>eduction <strong>I</strong>s <strong>G</strong>ain (of e⁻)</p>
+        <p>Nebo česky: <strong>„Oxidace = odevzdá elektrony"</strong></p>
+      </div>
+
+      <h4>Důležitá oxidační činidla (pro LF)</h4>
+      <div class="formula-box">
+        <div class="label">Silné oxidační činidla</div>
+        <span class="f-name">KMnO₄</span> <span class="f-form">manganistan draselný</span> <span class="f-note">MnO₄⁻ → Mn²⁺ (kyselé), → MnO₂ (neutrální)</span><br>
+        <span class="f-name">K₂Cr₂O₇</span><span class="f-form">dichroman draselný</span> <span class="f-note">Cr₂O₇²⁻ → 2Cr³⁺ (kyselé prostředí)</span><br>
+        <span class="f-name">H₂O₂</span>  <span class="f-form">peroxid vodíku</span> <span class="f-note">Oxidant i reduktant! (záleží na prostředí)</span><br>
+        <span class="f-name">O₃</span>    <span class="f-form">ozon</span>          <span class="f-note">silný oxidant, dezinfekce</span><br>
+        <span class="f-name">Cl₂</span>   <span class="f-form">chlor</span>         <span class="f-note">oxidant, dezinfekce vody</span>
+      </div>
+    </div>
+
+    <div class="divider"><span>Důležité prvky a sloučeniny pro LF</span></div>
+
+    <!-- 1.6 Biogenní prvky -->
+    <div class="section" id="biogenni">
+      <h3>1.6 Biogenní prvky – klíčové pro medicínu</h3>
+
+      <div class="cards">
+        <div class="card card-red">
+          <h4 class="red">🩸 Železo (Fe)</h4>
+          <ul>
+            <li>Hemoglobin: Fe²⁺ (Fe³⁺ = methemoglobin!)</li>
+            <li>Myoglobin, cytochromy</li>
+            <li>Deficit → sideropenická anémie</li>
+            <li>Fe²⁺ = železnatý, Fe³⁺ = železitý</li>
+          </ul>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">🦴 Vápník (Ca)</h4>
+          <ul>
+            <li>Ca₃(PO₄)₂ – kosti, zuby</li>
+            <li>Koagulace krve (faktor IV)</li>
+            <li>Svalová kontrakce</li>
+            <li>Norma: 2,25–2,75 mmol/L v séru</li>
+          </ul>
+        </div>
+        <div class="card card-yellow">
+          <h4 class="yellow">⚡ Sodík & Draslík</h4>
+          <ul>
+            <li>Na⁺ – extracelulární kation</li>
+            <li>K⁺ – intracelulární kation</li>
+            <li>Na⁺/K⁺-ATPáza = pumpa</li>
+            <li>Akční potenciál neuronů</li>
+          </ul>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">🫁 Fosfor (P)</h4>
+          <ul>
+            <li>ATP, ADP, AMP – energie!</li>
+            <li>DNA, RNA – fosfátová kostra</li>
+            <li>Fosfolipidy – membrány</li>
+            <li>Ca₃(PO₄)₂ – kosti</li>
+          </ul>
+        </div>
+        <div class="card card-teal">
+          <h4 class="teal">🫀 Hořčík (Mg)</h4>
+          <ul>
+            <li>Kofaktor 300+ enzymů</li>
+            <li>Chlorofyl (Mg²⁺ v centru)</li>
+            <li>Stabilizace ATP (Mg-ATP)</li>
+            <li>Hypomagnesémie → křeče</li>
+          </ul>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">🦋 Jód (I)</h4>
+          <ul>
+            <li>Štítná žláza – tyroxin (T₄), T₃</li>
+            <li>Deficit → struma, hypotyreóza</li>
+            <li>Lugolův roztok (I₂ + KI)</li>
+            <li>Škrob + I₂ → modrá barva</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /chapter-body -->
+</div><!-- /chapter anorg -->
+
+
+<!-- ████████ II. ORGANICKÁ CHEMIE ████████ -->
+<div class="chapter ch-org" id="org">
+  <div class="chapter-header">
+    <span class="icon">🟢</span>
+    <div>
+      <div class="num">Kapitola II</div>
+      <h2>Organická chemie</h2>
+    </div>
+  </div>
+  <div class="chapter-body">
+
+    <!-- Úvod do organiky -->
+    <div class="section">
+      <h3>2.0 Základy organické chemie</h3>
+      <div class="two-col">
+        <div class="card card-green">
+          <h4 class="green">Vlastnosti uhlíku C</h4>
+          <ul>
+            <li>Kovalentní vazby: 4 (tetravalentní)</li>
+            <li>Hybridizace: <span class="hl-green">sp³</span>, <span class="hl-blue">sp²</span>, <span class="hl-purple">sp</span></li>
+            <li>Tvoří řetězce, cykly, větvené struktury</li>
+            <li>C–C, C=C, C≡C</li>
+          </ul>
+        </div>
+        <div class="card card-blue">
+          <h4 class="blue">Hybridizace uhlíku</h4>
+          <ul>
+            <li><span class="hl-green">sp³</span> – tetraedr, 109,5°, alkany</li>
+            <li><span class="hl-blue">sp²</span> – trigon. planár, 120°, alkeny, arom.</li>
+            <li><span class="hl-purple">sp</span> – lineární, 180°, alkyny</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Funkční skupiny – přehled</h4>
+      <div style="margin: 12px 0;">
+        <span class="fg-badge red">–OH hydroxyl</span>
+        <span class="fg-badge orange">–COOH karboxyl</span>
+        <span class="fg-badge yellow">C=O karbonyl</span>
+        <span class="fg-badge green">–CHO aldehyd</span>
+        <span class="fg-badge teal">–NH₂ amino</span>
+        <span class="fg-badge blue">–SH thiol</span>
+        <span class="fg-badge purple">–NO₂ nitro</span>
+        <span class="fg-badge pink">–X halogeno</span>
+      </div>
+    </div>
+
+    <div class="divider"><span>Uhlovodíky</span></div>
+
+    <!-- 2.1 ALKANY -->
+    <div class="section" id="uhlovodiky">
+      <h3>2.1 Alkany (nasycené uhlovodíky)</h3>
+      <p class="subtitle">Obecný vzorec: CₙH₂ₙ₊₂ | Jednoduché vazby σ | hybridizace sp³</p>
+
+      <table class="tbl homo-table">
+        <tr>
+          <th>#</th><th>Vzorec</th><th>Název</th><th>Bod varu</th><th>Skupenství (25°C)</th>
+        </tr>
+        <tr><td>1</td><td class="f-form"><strong>CH₄</strong></td><td>metan</td><td>−162°C</td><td>plyn</td></tr>
+        <tr><td>2</td><td class="f-form"><strong>C₂H₆</strong></td><td>etan</td><td>−89°C</td><td>plyn</td></tr>
+        <tr><td>3</td><td class="f-form"><strong>C₃H₈</strong></td><td>propan</td><td>−42°C</td><td>plyn (LPG)</td></tr>
+        <tr><td>4</td><td class="f-form"><strong>C₄H₁₀</strong></td><td>butan</td><td>−1°C</td><td>plyn (zapalovače)</td></tr>
+        <tr><td>5</td><td class="f-form"><strong>C₅H₁₂</strong></td><td>pentan</td><td>36°C</td><td>kapalina</td></tr>
+        <tr><td>6</td><td class="f-form"><strong>C₆H₁₄</strong></td><td>hexan</td><td>69°C</td><td>kapalina (rozpouštědlo)</td></tr>
+        <tr><td>7</td><td class="f-form"><strong>C₇H₁₆</strong></td><td>heptan</td><td>98°C</td><td>kapalina</td></tr>
+        <tr><td>8</td><td class="f-form"><strong>C₈H₁₈</strong></td><td>oktan</td><td>126°C</td><td>kapalina (benzín)</td></tr>
+        <tr><td>10</td><td class="f-form"><strong>C₁₀H₂₂</strong></td><td>dekan</td><td>174°C</td><td>kapalina</td></tr>
+        <tr><td>16+</td><td class="f-form"><strong>C₁₆H₃₄+</strong></td><td>hexadekan+</td><td>&gt;280°C</td><td>pevná (parafín, vosky)</td></tr>
+      </table>
+
+      <div class="memory">
+        <div class="mem-title">🧠 Pamatuj si názvy!</div>
+        <p><strong>Met-Et-Prop-But-Pent-Hex-Hept-Oct-Non-Dec</strong></p>
+        <p>Věta: <strong>„Mnoho Enkrátů Přibývá Bočních Pohledů Hexenů Hemých Okolo Nás Deset"</strong></p>
+      </div>
+
+      <h4>Reakce alkanů</h4>
+      <div class="reaction"><span class="reac">CH₄ + Cl₂</span><span class="arr">──hν──→</span><span class="prod">CH₃Cl + HCl</span> <span class="cond">(radikálová substituce, SR)</span></div>
+      <div class="reaction"><span class="reac">CH₄ + 2O₂</span><span class="arr">──→</span><span class="prod">CO₂ + 2H₂O</span> <span class="cond">(spalování)</span></div>
+
+      <h4>Větvené alkany – pojmenování</h4>
+      <div class="formula-box">
+        <div class="label">Alkyly (substituenty)</div>
+        <span class="f-name">–CH₃</span>   <span class="f-form">methyl</span><br>
+        <span class="f-name">–C₂H₅</span>  <span class="f-form">ethyl</span><br>
+        <span class="f-name">–C₃H₇</span>  <span class="f-form">propyl / isopropyl</span><br>
+        <span class="f-name">–C₄H₉</span>  <span class="f-form">butyl / isobutyl / sec-butyl / tert-butyl</span><br>
+        <span class="f-name">–C₅H₁₁</span> <span class="f-form">pentyl</span><br>
+        <span class="f-name">–C₆H₅</span>  <span class="f-form">fenyl (Ph, aromatický!)</span>
+      </div>
+
+      <div class="card card-blue">
+        <h4 class="blue">Pravidla názvosloví IUPAC (alkany)</h4>
+        <ol style="padding-left: 20px; font-size: 14px;">
+          <li>Najdi <strong>nejdelší uhlíkatý řetězec</strong> = základní řetězec</li>
+          <li>Čísluj od konce bližšího k substituent</li>
+          <li>Substituenty uváděj abecedně s lokantami</li>
+          <li>Při stejné vzdálenosti → menší čísla</li>
+        </ol>
+        <p style="font-size: 13px; margin-top: 10px; color: var(--muted);">Příklad: 2-methylpropan = isobutan (CH₃–CH(CH₃)–CH₃)</p>
+      </div>
+    </div>
+
+    <!-- 2.2 ALKENY -->
+    <div class="section" id="alkeny">
+      <h3>2.2 Alkeny (uhlovodíky s dvojnou vazbou)</h3>
+      <p class="subtitle">Obecný vzorec: CₙH₂ₙ | Dvojná vazba C=C (σ+π) | hybridizace sp²</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Triviální</th><th>Využití</th></tr>
+        <tr><td class="f-form"><strong>C₂H₄</strong></td><td>ethen</td><td>ethylen</td><td>výroba PE, dozrávání ovoce (fytohormón)</td></tr>
+        <tr><td class="f-form"><strong>C₃H₆</strong></td><td>propen</td><td>propylen</td><td>výroba PP (polypropylen)</td></tr>
+        <tr><td class="f-form"><strong>C₄H₈</strong></td><td>buten</td><td>—</td><td>výroba kaučuku</td></tr>
+        <tr><td class="f-form"><strong>C₅H₁₀</strong></td><td>penten</td><td>—</td><td></td></tr>
+        <tr><td class="f-form"><strong>C₂H₄ (cyklo)</strong></td><td>—</td><td>—</td><td>Cyklopropan je výjimka (cykloalkán s CₙH₂ₙ)</td></tr>
+      </table>
+
+      <h4>Reakce alkenů</h4>
+      <div class="reaction"><span class="reac">CH₂=CH₂ + H₂</span><span class="arr">──Ni──→</span><span class="prod">CH₃–CH₃</span> <span class="cond">(hydrogenace, adice)</span></div>
+      <div class="reaction"><span class="reac">CH₂=CH₂ + HCl</span><span class="arr">──→</span><span class="prod">CH₃–CH₂Cl</span> <span class="cond">(Markovnikovovo pravidlo)</span></div>
+      <div class="reaction"><span class="reac">CH₂=CH₂ + H₂O</span><span class="arr">──H⁺──→</span><span class="prod">CH₃–CH₂OH</span> <span class="cond">(hydratace → alkohol)</span></div>
+      <div class="reaction"><span class="reac">CH₂=CH₂ + Br₂</span><span class="arr">──→</span><span class="prod">CH₂Br–CH₂Br</span> <span class="cond">(test na dvojnou vazbu: odbarvení Br₂)</span></div>
+
+      <div class="alert alert-green">
+        <span class="ico">✅</span>
+        <div><strong>Markovnikovovo pravidlo:</strong> Při adici HX na nesymetrický alken se H přidává na uhlík s více H atomy (= bohatý je bohatší!).<br>Příklad: CH₃–CH=CH₂ + HBr → CH₃–CHBr–CH₃ (2-brompropan, NE 1-brompropan)</div>
+      </div>
+
+      <h4>Cis-trans izomerie (geometrická)</h4>
+      <div class="two-col">
+        <div class="card card-yellow">
+          <h4 class="yellow">cis-2-buten</h4>
+          <p>Stejné skupiny na téže straně dvojné vazby</p>
+          <div class="chain-vis">
+            <div class="chain-row">CH₃   CH₃</div>
+            <div class="chain-row">  \   /</div>
+            <div class="chain-row">  C=C</div>
+            <div class="chain-row">  /   \</div>
+            <div class="chain-row">H       H</div>
+          </div>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">trans-2-buten</h4>
+          <p>Stejné skupiny na protilehlých stranách</p>
+          <div class="chain-vis">
+            <div class="chain-row">CH₃   H</div>
+            <div class="chain-row">  \   /</div>
+            <div class="chain-row">  C=C</div>
+            <div class="chain-row">  /   \</div>
+            <div class="chain-row">H       CH₃</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.3 ALKYNY -->
+    <div class="section" id="alkyny">
+      <h3>2.3 Alkyny (trojná vazba)</h3>
+      <p class="subtitle">Obecný vzorec: CₙH₂ₙ₋₂ | Trojná vazba C≡C (σ+2π) | hybridizace sp | lineární tvar</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Triviální</th><th>Využití</th></tr>
+        <tr><td class="f-form"><strong>C₂H₂</strong></td><td>ethyn</td><td>acetylén</td><td>svařování (3 500°C), syntéza</td></tr>
+        <tr><td class="f-form"><strong>C₃H₄</strong></td><td>propyn</td><td>methylacetylén</td><td></td></tr>
+      </table>
+
+      <div class="reaction"><span class="reac">C₂H₂ + 2H₂</span><span class="arr">──Ni──→</span><span class="prod">C₂H₆</span> <span class="cond">(úplná hydrogenace)</span></div>
+      <div class="reaction"><span class="reac">C₂H₂ + H₂O</span><span class="arr">──Hg²⁺──→</span><span class="prod">CH₃CHO</span> <span class="cond">(acetaldehyd – Kučerovova reakce)</span></div>
+    </div>
+
+    <!-- 2.4 ARENY -->
+    <div class="section" id="areny">
+      <h3>2.4 Aromatické uhlovodíky (Areny)</h3>
+      <p class="subtitle">Benzenové jádro, delokalizované π-elektrony, planární struktura, hybridizace sp²</p>
+
+      <div class="diagram-wrap">
+        <svg width="420" height="200" viewBox="0 0 420 200" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <marker id="ah" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+              <path d="M0,0 L6,3 L0,6 Z" fill="#27ae60"/>
+            </marker>
+          </defs>
+          <!-- Benzene hexagon -->
+          <g transform="translate(90, 100)">
+            <polygon points="0,-55 47.6,-27.5 47.6,27.5 0,55 -47.6,27.5 -47.6,-27.5"
+                     fill="none" stroke="#1a1a2e" stroke-width="2.5"/>
+            <circle cx="0" cy="0" r="30" fill="none" stroke="#27ae60" stroke-width="2.5" stroke-dasharray="188.5"/>
+            <text x="0" y="80" text-anchor="middle" font-size="13" fill="#6b6b80">Benzén C₆H₆</text>
+            <text x="0" y="-65" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+            <text x="55" y="-35" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+            <text x="55" y="40" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+            <text x="0" y="75" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+            <text x="-55" y="40" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+            <text x="-55" y="-35" text-anchor="middle" font-size="11" fill="#2980b9">H</text>
+          </g>
+          <!-- Arrow -->
+          <text x="175" y="105" font-size="24" fill="#6b6b80">⟺</text>
+          <!-- Naphthalene-like structure label -->
+          <g transform="translate(300, 100)">
+            <polygon points="0,-50 43,-25 43,25 0,50 -43,25 -43,-25"
+                     fill="#f0fdf4" stroke="#27ae60" stroke-width="2"/>
+            <polygon points="0,-30 26,-15 26,15 0,30 -26,15 -26,-15"
+                     fill="none" stroke="#27ae60" stroke-width="1.5" stroke-dasharray="6,3"/>
+            <text x="0" y="5" text-anchor="middle" font-size="13" fill="#27ae60" font-weight="bold">π</text>
+            <text x="0" y="68" text-anchor="middle" font-size="12" fill="#6b6b80">delokalizace e⁻</text>
+          </g>
+        </svg>
+        <figcaption>Benzenový kruh – delokalizované π-elektrony zajišťují aromaticitu a stabilitu</figcaption>
+      </div>
+
+      <h4>Důležité aromatické sloučeniny</h4>
+      <table class="tbl">
+        <tr><th>Vzorec / Struktura</th><th>Název</th><th>Vlastnosti / Využití</th></tr>
+        <tr><td class="f-form"><strong>C₆H₆</strong></td><td>benzen</td><td>Karcinogen! Rozpouštědlo, výroba plastů</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–CH₃</strong></td><td>toluen (methylbenzen)</td><td>Rozpouštědlo, výroba TNT</td></tr>
+        <tr><td class="f-form"><strong>C₆H₄(CH₃)₂</strong></td><td>xylen (dimethylbenzen)</td><td>3 izomery: ortho, meta, para</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–OH</strong></td><td>fenol</td><td>Dezinfekce, výroba plastů (bazoidní OH)</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–NH₂</strong></td><td>anilin</td><td>Výroba barviv, léčiv</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–COOH</strong></td><td>kyselina benzoová</td><td>Konzervant (E210)</td></tr>
+        <tr><td class="f-form"><strong>C₁₀H₈</strong></td><td>naftalen</td><td>2 benzenová jádra, naftalinové kuličky</td></tr>
+        <tr><td class="f-form"><strong>C₁₄H₁₀</strong></td><td>antracen</td><td>3 jádra, výroba barviv</td></tr>
+        <tr><td class="f-form"><strong>C₆H₂(CH₃)(NO₂)₃</strong></td><td>TNT (trinitrotoluen)</td><td>Výbušnina</td></tr>
+      </table>
+
+      <h4>Reakce arenů</h4>
+      <div class="reaction"><span class="reac">C₆H₆ + Br₂</span><span class="arr">──FeBr₃──→</span><span class="prod">C₆H₅Br + HBr</span> <span class="cond">(elektrofilní aromatická substituce, SEAr)</span></div>
+      <div class="reaction"><span class="reac">C₆H₆ + HNO₃</span><span class="arr">──H₂SO₄──→</span><span class="prod">C₆H₅NO₂ + H₂O</span> <span class="cond">(nitrace – výroba nitrobenzenu/TNT)</span></div>
+      <div class="reaction"><span class="reac">C₆H₆ + 3H₂</span><span class="arr">──Ni/200°C──→</span><span class="prod">C₆H₁₂</span> <span class="cond">(hydrogenace → cyklohexan, podmínky přísné)</span></div>
+
+      <div class="alert alert-orange">
+        <span class="ico">⚠️</span>
+        <div>Areny preferují <strong>substituci</strong> (ne adici!) – zachovává se aromatická stabilita. Substituenti dělí se na <em>aktivující</em> (–OH, –NH₂, –CH₃) a <em>deaktivující</em> (–NO₂, –COOH, –CF₃).</div>
+      </div>
+    </div>
+
+    <div class="divider"><span>Deriváty uhlovodíků</span></div>
+
+    <!-- 2.5 HALOGENDERIVÁTY -->
+    <div class="section" id="derivaty">
+      <h3>2.5 Halogenderiváty</h3>
+      <p class="subtitle">Vzorec: R–X (X = F, Cl, Br, I) | Polární vazba C–X</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název (IUPAC)</th><th>Triviální / Využití</th></tr>
+        <tr><td class="f-form"><strong>CH₃Cl</strong></td><td>chlormethan</td><td>methylchlorid, chladivo</td></tr>
+        <tr><td class="f-form"><strong>CH₂Cl₂</strong></td><td>dichlormethan</td><td>rozpouštědlo, extrakce</td></tr>
+        <tr><td class="f-form"><strong>CHCl₃</strong></td><td>trichlormethan</td><td>chloroform, anestetikum (hist.)</td></tr>
+        <tr><td class="f-form"><strong>CCl₄</strong></td><td>tetrachlormethan</td><td>halon, hasicí přístroje (hist.), hepatotoxický!</td></tr>
+        <tr><td class="f-form"><strong>CH₂=CHCl</strong></td><td>chlorethen</td><td>vinylchlorid → PVC</td></tr>
+        <tr><td class="f-form"><strong>CF₂=CF₂</strong></td><td>tetrafluorethen</td><td>→ PTFE (teflon)</td></tr>
+        <tr><td class="f-form"><strong>CHCl=CCl₂</strong></td><td>trichlorethen</td><td>trichloretylén, odmašťování</td></tr>
+        <tr><td class="f-form"><strong>CF₂Cl₂</strong></td><td>difluordichlormethan</td><td>Freon-12, destrukce ozonu!</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅Cl</strong></td><td>chlorbenzen</td><td>výroba DDT, léčiv</td></tr>
+        <tr><td class="f-form"><strong>CHI₃</strong></td><td>trijodmethan</td><td>jodoform, antiseptikum</td></tr>
+      </table>
+
+      <h4>Reakce halogenderivátů</h4>
+      <div class="reaction"><span class="reac">R–Cl + NaOH(aq)</span><span class="arr">──→</span><span class="prod">R–OH + NaCl</span> <span class="cond">(hydrolýza → alkohol, SN)</span></div>
+      <div class="reaction"><span class="reac">R–Cl + NaOH(alc)</span><span class="arr">──→</span><span class="prod">alken + NaCl + H₂O</span> <span class="cond">(eliminace, E2)</span></div>
+      <div class="reaction"><span class="reac">R–Cl + Mg</span><span class="arr">──éter──→</span><span class="prod">R–MgCl</span> <span class="cond">(Grignardovo čidlo)</span></div>
+    </div>
+
+    <!-- 2.6 ALKOHOLY -->
+    <div class="section" id="alkoholy">
+      <h3>2.6 Alkoholy</h3>
+      <p class="subtitle">Funkční skupina: –OH (hydroxyl) | Vzorec: R–OH | Vodíkové můstky → vyšší bod varu</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název (IUPAC)</th><th>Triviální</th><th>Využití / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>CH₃OH</strong></td><td>methanol</td><td>dřevný líh</td><td>⚠️ JEDY! Slepota, smrt (oxidace → HCHO → HCOOH)</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅OH</strong></td><td>ethanol</td><td>líh, alkohol</td><td>Nápoje, dezinfekce, palivo (E85)</td></tr>
+        <tr><td class="f-form"><strong>C₃H₇OH</strong></td><td>propan-1-ol / propan-2-ol</td><td>propanol / isopropanol</td><td>Dezinfekce, rozpouštědlo</td></tr>
+        <tr><td class="f-form"><strong>C₄H₉OH</strong></td><td>butan-1-ol</td><td>butanol</td><td>Rozpouštědlo</td></tr>
+        <tr><td class="f-form"><strong>HOCH₂CH₂OH</strong></td><td>ethan-1,2-diol</td><td>glykol, ethylenglykol</td><td>Nemrznoucí směsi, PET vlákna</td></tr>
+        <tr><td class="f-form"><strong>HOCH₂CHOHCH₂OH</strong></td><td>propan-1,2,3-triol</td><td>glycerol, glycerín</td><td>Kosmetika, výroba nitroglycerinu, součást tuků!</td></tr>
+        <tr><td class="f-form"><strong>(CH₃)₃COH</strong></td><td>2-methylpropan-2-ol</td><td>tert-butanol</td><td>Terciární alkohol</td></tr>
+      </table>
+
+      <h4>Primární, sekundární, terciární alkoholy</h4>
+      <div class="cards">
+        <div class="card card-green">
+          <h4 class="green">1° Primární</h4>
+          <p>–OH na C nesoucím 1 alkylu<br>CH₃OH, C₂H₅OH, CH₂OH–<br>Oxidace → aldehyd → kys. karboxy.</p>
+        </div>
+        <div class="card card-blue">
+          <h4 class="blue">2° Sekundární</h4>
+          <p>–OH na C nesoucím 2 alkylů<br>CH₃–CHOH–CH₃ (propan-2-ol)<br>Oxidace → keton</p>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">3° Terciární</h4>
+          <p>–OH na C nesoucím 3 alkylů<br>(CH₃)₃C–OH (tert-butanol)<br>Oxidace velmi obtížná</p>
+        </div>
+      </div>
+
+      <h4>Reakce alkoholů</h4>
+      <div class="reaction"><span class="reac">2C₂H₅OH</span><span class="arr">──H₂SO₄, 140°C──→</span><span class="prod">C₂H₅–O–C₂H₅ + H₂O</span> <span class="cond">(dehydratace → éter)</span></div>
+      <div class="reaction"><span class="reac">C₂H₅OH</span><span class="arr">──H₂SO₄, 180°C──→</span><span class="prod">CH₂=CH₂ + H₂O</span> <span class="cond">(eliminace → alken)</span></div>
+      <div class="reaction"><span class="reac">C₂H₅OH + [O]</span><span class="arr">──K₂Cr₂O₇──→</span><span class="prod">CH₃CHO</span><span class="arr">──[O]──→</span><span class="prod">CH₃COOH</span> <span class="cond">(oxidace)</span></div>
+      <div class="reaction"><span class="reac">C₂H₅OH + Na</span><span class="arr">──→</span><span class="prod">C₂H₅ONa + ½H₂↑</span> <span class="cond">(alkoholáty – slabší než NaOH)</span></div>
+      <div class="reaction"><span class="reac">R–OH + R'–COOH</span><span class="arr">──H⁺──→</span><span class="prod">R'–COO–R + H₂O</span> <span class="cond">(esterifikace → ester)</span></div>
+    </div>
+
+    <!-- 2.7 FENOLY -->
+    <div class="section" id="fenoly">
+      <h3>2.7 Fenoly</h3>
+      <p class="subtitle">–OH přímo na benzenovém jádře | Silnější kyseliny než alkoholy (mesomerní stabilizace C₆H₅O⁻)</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Využití</th></tr>
+        <tr><td class="f-form"><strong>C₆H₅OH</strong></td><td>fenol (hydroxybenzén)</td><td>Dezinfekce (karbolová kyselina), výroba plastů, léčiv</td></tr>
+        <tr><td class="f-form"><strong>HO–C₆H₄–OH</strong></td><td>dihydroxybenzén (katechol, resorcinol, hydrochinon)</td><td>Vývojka (hydrochinon), antioxidant</td></tr>
+        <tr><td class="f-form"><strong>CH₃–C₆H₄–OH</strong></td><td>kresol (methylfenol)</td><td>Dezinfekce (lysol)</td></tr>
+        <tr><td class="f-form"><strong>HO–C₆H₃–(NO₂)₃</strong></td><td>pikrová kyselina (trinitrofenol)</td><td>Žluté barvivo, výbušnina</td></tr>
+        <tr><td class="f-form"><strong>BPA</strong></td><td>bisfenol A</td><td>Výroba polykarbonátu, kontroverzní (endokrinní disruptor)</td></tr>
+      </table>
+
+      <div class="alert alert-blue">
+        <span class="ico">🔬</span>
+        <div><strong>Fenol vs. alkohol:</strong> Fenol je <em>kyselejší</em> (pKa ~10) než alkohol (pKa ~16) díky stabilizaci fenoxidového aniontu rezonancí. Reaguje i s NaOH (alkoholy ne)!</div>
+      </div>
+    </div>
+
+    <!-- 2.8 ÉTERY -->
+    <div class="section" id="etery">
+      <h3>2.8 Étery</h3>
+      <p class="subtitle">Vzorec: R–O–R' | „Kyslík mezi dvěma uhlíky" | Inertní, nízký bod varu</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název (IUPAC)</th><th>Triviální / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>CH₃–O–CH₃</strong></td><td>methoxymetan</td><td>dimethyléter, plyn</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅–O–C₂H₅</strong></td><td>ethoxyethan</td><td>diethyléter, „éter" – anestetikum (hist.), rozpouštědlo, hořlavý!</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–O–CH₃</strong></td><td>methoxybenzén</td><td>anisol</td></tr>
+        <tr><td class="f-form"><strong>–O– (cyklus)</strong></td><td>epoxidy</td><td>oxiran C₂H₄O – reaktivní, výroba pryskyřic</td></tr>
+        <tr><td class="f-form"><strong>THF</strong></td><td>tetrahydrofuran</td><td>Cyklický éter, rozpouštědlo</td></tr>
+      </table>
+    </div>
+
+    <!-- 2.9 ALDEHYDY a KETONY -->
+    <div class="section" id="aldehydy">
+      <h3>2.9 Aldehydy a Ketony</h3>
+      <p class="subtitle">Karbonylová skupina C=O | Aldehydy: –CHO (C na konci) | Ketony: –CO– (C uprostřed)</p>
+
+      <h4>Aldehydy</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>IUPAC</th><th>Triviální</th><th>Využití / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>HCHO</strong></td><td>methanal</td><td>formaldehyd</td><td>Konzervace (formalín 37%), výroba pryskyřic, KARCINOGEN</td></tr>
+        <tr><td class="f-form"><strong>CH₃CHO</strong></td><td>ethanal</td><td>acetaldehyd</td><td>Metabolit ethanolu! (oxidace EtOH v játrech)</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅CHO</strong></td><td>propanal</td><td>propionaldehyd</td><td></td></tr>
+        <tr><td class="f-form"><strong>C₆H₅CHO</strong></td><td>benzaldehyd</td><td>—</td><td>Vůně mandlí, parfumerie</td></tr>
+        <tr><td class="f-form"><strong>OHCCHO</strong></td><td>ethandial</td><td>glyoxal</td><td>Dezinfekce nástrojů</td></tr>
+      </table>
+
+      <h4>Ketony</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>IUPAC</th><th>Triviální</th><th>Využití / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>CH₃–CO–CH₃</strong></td><td>propan-2-on</td><td>aceton</td><td>Rozpouštědlo, odlakovač; v moči diabetiků (ketoacidóza)!</td></tr>
+        <tr><td class="f-form"><strong>CH₃–CO–C₂H₅</strong></td><td>butan-2-on</td><td>methylethylketon (MEK)</td><td>Rozpouštědlo</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–CO–CH₃</strong></td><td>1-fenylpropan-1-on... (acetofenon)</td><td>acetofenon</td><td>Parfumerie</td></tr>
+        <tr><td class="f-form"><strong>C₆H₅–CO–C₆H₅</strong></td><td>difenylketon</td><td>benzofenon</td><td>UV filtr, fotoiniciátor</td></tr>
+      </table>
+
+      <h4>Reakce aldehydů a ketonů</h4>
+      <div class="reaction"><span class="reac">R–CHO + [Ag⁺] (Tollensovo čidlo)</span><span class="arr">──→</span><span class="prod">stříbrné zrcadlo + R–COOH</span> <span class="cond">(pouze aldehydy!)</span></div>
+      <div class="reaction"><span class="reac">R–CHO + Cu(OH)₂ (Fehlingovo čidlo)</span><span class="arr">──→</span><span class="prod">Cu₂O↓ (červená) + R–COOH</span> <span class="cond">(pouze aldehydy!)</span></div>
+      <div class="reaction"><span class="reac">R–CHO + H₂</span><span class="arr">──Ni──→</span><span class="prod">R–CH₂OH</span> <span class="cond">(redukce → primární alkohol)</span></div>
+      <div class="reaction"><span class="reac">R–CO–R' + H₂</span><span class="arr">──Ni──→</span><span class="prod">R–CHOH–R'</span> <span class="cond">(redukce → sekundární alkohol)</span></div>
+
+      <div class="alert alert-red">
+        <span class="ico">🩺</span>
+        <div><strong>Klinicky důležité!</strong> <strong>Aceton</strong> (propan-2-on) + kyselina acetoctová + β-hydroxybutyrát = <em>ketonická tělesa</em>. Vznikají při nedostatku inzulínu → <strong>diabetická ketoacidóza</strong>. Dech „po acetonu"!</div>
+      </div>
+    </div>
+
+    <!-- 2.10 KARBOXYLOVÉ KYSELINY -->
+    <div class="section" id="kyseliny-org">
+      <h3>2.10 Karboxylové kyseliny</h3>
+      <p class="subtitle">Funkční skupina: –COOH (karboxyl) | Kyseliny (pKa 3–5) | Vodíkové můstky | Vzorec: R–COOH</p>
+
+      <h4>Nasycené monokarboxylové kyseliny (mastné kyseliny!)</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>IUPAC</th><th>Triviální</th><th>Výskyt / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>HCOOH</strong></td><td>methanoová</td><td>mravenčí</td><td>Mravenci, kopřivy – způsobuje pálení</td></tr>
+        <tr><td class="f-form"><strong>CH₃COOH</strong></td><td>ethanová</td><td>octová</td><td>Ocet (5–8%), aspirin (acetylsalicylová)</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅COOH</strong></td><td>propanová</td><td>propionová</td><td>Konzervant v pečivu</td></tr>
+        <tr><td class="f-form"><strong>C₃H₇COOH</strong></td><td>butanová</td><td>máselná</td><td>Zkyslé máslo, nepříjemný zápach</td></tr>
+        <tr><td class="f-form"><strong>C₉H₁₉COOH</strong></td><td>dekanová</td><td>kaprinová</td><td></td></tr>
+        <tr><td class="f-form"><strong>C₁₁H₂₃COOH</strong></td><td>dodekanová</td><td>laurová</td><td>Kokosový olej</td></tr>
+        <tr><td class="f-form"><strong>C₁₃H₂₇COOH</strong></td><td>tetradekanová</td><td>myristová</td><td>Muškátový ořech</td></tr>
+        <tr><td class="f-form"><strong>C₁₅H₃₁COOH</strong></td><td>hexadekanová</td><td>palmitová (C16:0)</td><td>Palmový olej, živočišné tuky – nasycená!</td></tr>
+        <tr><td class="f-form"><strong>C₁₇H₃₅COOH</strong></td><td>oktadekanová</td><td>stearová (C18:0)</td><td>Živočišné tuky, mýdla</td></tr>
+      </table>
+
+      <h4>Nenasycené mastné kyseliny (KLÍČOVÉ pro LF!)</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Triviální název</th><th>Dvojné vazby</th><th>Klinický význam</th></tr>
+        <tr><td class="f-form"><strong>C₁₈H₃₄O₂ (C18:1)</strong></td><td>olejová (ω-9)</td><td>1 (cis, Δ9)</td><td>Olivový olej, srdce ochranný</td></tr>
+        <tr><td class="f-form"><strong>C₁₈H₃₂O₂ (C18:2)</strong></td><td>linolová (ω-6)</td><td>2 (cis, Δ9,12)</td><td><span class="hl-red">Esenciální</span> – musí být v potravě!</td></tr>
+        <tr><td class="f-form"><strong>C₁₈H₃₀O₂ (C18:3)</strong></td><td>linolenová (ω-3)</td><td>3 (cis)</td><td><span class="hl-red">Esenciální</span> – protizánětlivé, ryby!</td></tr>
+        <tr><td class="f-form"><strong>C₂₀H₃₂O₂ (C20:4)</strong></td><td>arachidonová (ω-6)</td><td>4</td><td>Prekurzor prostaglandinů, leukotrienů</td></tr>
+        <tr><td class="f-form"><strong>EPA (C20:5)</strong></td><td>eikosapentaenová (ω-3)</td><td>5</td><td>Rybí olej, kardioprotektivní</td></tr>
+        <tr><td class="f-form"><strong>DHA (C22:6)</strong></td><td>dokosahexaenová (ω-3)</td><td>6</td><td>Mozek, sítnice, vývoj plodu!</td></tr>
+      </table>
+
+      <div class="alert alert-green">
+        <span class="ico">🐟</span>
+        <div><strong>Omega-3 vs Omega-6:</strong> ω-3 (EPA, DHA, linolenová) – <em>protizánětlivé</em>. ω-6 (linolová, arachidonová) – <em>prozánětlivé</em>. Ideální poměr ω-6:ω-3 = 4:1 (západ. strava bývá 20:1!). Oba typy jsou esenciální.</div>
+      </div>
+
+      <h4>Dikarboxylové kyseliny</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>IUPAC</th><th>Triviální</th><th>Využití</th></tr>
+        <tr><td class="f-form"><strong>HOOC–COOH</strong></td><td>ethandioová</td><td>šťavelová (oxalová)</td><td>Šťavel, ledvinné kameny (šťavelan vápenatý)!</td></tr>
+        <tr><td class="f-form"><strong>HOOC–CH₂–COOH</strong></td><td>propandioová</td><td>malonová</td><td>Malonyl-CoA (biosyntéza MK)</td></tr>
+        <tr><td class="f-form"><strong>HOOC–(CH₂)₂–COOH</strong></td><td>butandioová</td><td>jantarová (sukcinová)</td><td>Krebsův cyklus!</td></tr>
+        <tr><td class="f-form"><strong>cis-HOOC–CH=CH–COOH</strong></td><td>cis-butendiová</td><td>fumarová</td><td>Krebsův cyklus!</td></tr>
+        <tr><td class="f-form"><strong>HOOC–(CH₂)₄–COOH</strong></td><td>hexandioová</td><td>adipová</td><td>Výroba nylonu</td></tr>
+        <tr><td class="f-form"><strong>HOOC–C₆H₄–COOH</strong></td><td>benzén-1,2-dioová</td><td>ftalová</td><td>Výroba PVC změkčovadel</td></tr>
+      </table>
+
+      <h4>Hydroxykyseliny (velmi důležité!)</h4>
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Klinický / Biochem. význam</th></tr>
+        <tr><td class="f-form"><strong>CH₃–CHOH–COOH</strong></td><td>mléčná (laktátová)</td><td>Fermentace, anaerobní glykolýza, laktátová acidóza!</td></tr>
+        <tr><td class="f-form"><strong>HOCH₂–COOH</strong></td><td>glykolová</td><td>Kosmetika (AHA kyseliny), exfoliant</td></tr>
+        <tr><td class="f-form"><strong>HOOC–CHOH–CH₂–COOH</strong></td><td>jablečná (maláty)</td><td>Krebsův cyklus!</td></tr>
+        <tr><td class="f-form"><strong>HOOC–CHOH–CHOH–COOH</strong></td><td>vinná (tartarová)</td><td>Kvasinkové usazeniny, prášek do pečiva</td></tr>
+        <tr><td class="f-form"><strong>HOOC–C(OH)(CH₂COOH)₂–CH₂COOH</strong></td><td>citronová</td><td><span class="hl-green">Krebsův cyklus</span>, konzervant (E330), nápoje</td></tr>
+        <tr><td class="f-form"><strong>C₆H₈O₆</strong></td><td>askorbová (vit. C)</td><td>Antioxidant, syntéza kolagenu! Deficit → kurděje</td></tr>
+      </table>
+
+      <h4>Reakce karboxylových kyselin</h4>
+      <div class="reaction"><span class="reac">R–COOH + R'–OH</span><span class="arr">──H⁺──→</span><span class="prod">R–COO–R' + H₂O</span> <span class="cond">(esterifikace, rovnovážná)</span></div>
+      <div class="reaction"><span class="reac">R–COOH + NaOH</span><span class="arr">──→</span><span class="prod">R–COONa + H₂O</span> <span class="cond">(neutralizace → sůl; mýdlo = sůl vyšší MK)</span></div>
+      <div class="reaction"><span class="reac">R–COOH + SOCl₂</span><span class="arr">──→</span><span class="prod">R–COCl + SO₂ + HCl</span> <span class="cond">(acylchlorid – reaktivní)</span></div>
+      <div class="reaction"><span class="reac">R–COOH + NH₃</span><span class="arr">──→</span><span class="prod">R–CO–NH₂ + H₂O</span> <span class="cond">(amid)</span></div>
+    </div>
+
+    <!-- 2.11 ESTERY -->
+    <div class="section" id="estery">
+      <h3>2.11 Estery</h3>
+      <p class="subtitle">Vzorec: R–COO–R' | Vznik: kyselina + alkohol → ester + voda | Charakteristická vůně</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Vůně / Využití</th></tr>
+        <tr><td class="f-form"><strong>CH₃COOC₂H₅</strong></td><td>ethylacetát (ethanoan ethylnatý)</td><td>Hruška, rozpouštědlo (lak na nehty)</td></tr>
+        <tr><td class="f-form"><strong>CH₃COO–C₅H₁₁</strong></td><td>amylacetát (pentanoan pentylnatý)</td><td>Banán</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅COO–C₅H₁₁</strong></td><td>amylpropanoát</td><td>Meruňka</td></tr>
+        <tr><td class="f-form"><strong>HCOO–C₃H₇</strong></td><td>propylformiát</td><td>Rum</td></tr>
+        <tr><td class="f-form"><strong>CH₃COO–C₄H₉</strong></td><td>butylacetát</td><td>Jablko</td></tr>
+        <tr><td class="f-form"><strong>Glycerol + 3 MK</strong></td><td>triacylglycerol (tuk)</td><td>Tuky a oleje – zásobní energetická forma!</td></tr>
+        <tr><td class="f-form"><strong>C₉H₈O₄</strong></td><td>kyselina acetylsalicylová</td><td>Aspirin – lék (ester kys. salicylové a octové)</td></tr>
+        <tr><td class="f-form"><strong>Glycerol + HNO₃</strong></td><td>glycerol-trinitrát (nitroglycerin)</td><td>Výbušnina; lék na anginu pectoris!</td></tr>
+      </table>
+
+      <h4>Tuky (triacylglyceroly) – KLÍČOVÉ!</h4>
+      <div class="card card-orange">
+        <h4 class="orange">🧈 Struktura tuků</h4>
+        <p>Glycerol (triol) + 3 mastné kyseliny → triacylglycerol + 3 H₂O</p>
+        <br>
+        <div class="chain-vis">
+          <div class="chain-row">CH₂–OH + HOOC–R₁  →  CH₂–OOC–R₁</div>
+          <div class="chain-row">|                       |</div>
+          <div class="chain-row">CH –OH + HOOC–R₂  →  CH –OOC–R₂  + 3H₂O</div>
+          <div class="chain-row">|                       |</div>
+          <div class="chain-row">CH₂–OH + HOOC–R₃  →  CH₂–OOC–R₃</div>
+          <div class="chain-label">glycerol + 3 MK → TAG (triacylglycerol)</div>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="card card-red">
+          <h4 class="red">🧈 Nasycené tuky</h4>
+          <ul>
+            <li>Pouze C–C jednoduché vazby</li>
+            <li>Pevné při pokojové teplotě</li>
+            <li>Máslo, lůj, sádlo, kokosový tuk</li>
+            <li>Vyšší riziko aterosklerózy</li>
+          </ul>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">🫒 Nenasycené tuky</h4>
+          <ul>
+            <li>C=C dvojné vazby (cis!</li>
+            <li>Kapalné (oleje)</li>
+            <li>Olivový, slunečnicový, rybí olej</li>
+            <li>Kardioprotektivní efekt</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-purple">
+        <span class="ico">🔑</span>
+        <div><strong>Trans-tuky:</strong> Vznikají hydrogenací rostlinných olejů (margarín). Trans-konfigurace = podobají se nasycenám, zvyšují LDL, snižují HDL. Negativní zdravotní efekty!</div>
+      </div>
+
+      <h4>Hydrolýza tuků (zmýdelňování)</h4>
+      <div class="reaction"><span class="reac">TAG + 3 NaOH</span><span class="arr">──→</span><span class="prod">glycerol + 3 R–COONa</span> <span class="cond">(mýdlo = sodná sůl vyšší MK)</span></div>
+    </div>
+
+    <!-- 2.12 AMINY -->
+    <div class="section" id="aminy">
+      <h3>2.12 Aminy</h3>
+      <p class="subtitle">Deriváty NH₃: primární (R–NH₂), sekundární (R₂NH), terciární (R₃N) | Zásadité vlastnosti</p>
+
+      <table class="tbl">
+        <tr><th>Vzorec</th><th>Název</th><th>Využití / Poznámka</th></tr>
+        <tr><td class="f-form"><strong>CH₃NH₂</strong></td><td>methylamin</td><td>Prim. amin, pach ryb (spolu s trimethylaminem)</td></tr>
+        <tr><td class="f-form"><strong>(CH₃)₃N</strong></td><td>trimethylamin</td><td>Pach ryb, metabolismus cholinu</td></tr>
+        <tr><td class="f-form"><strong>C₂H₅NH₂</strong></td><td>ethylamin</td><td></td></tr>
+        <tr><td class="f-form"><strong>C₆H₅NH₂</strong></td><td>anilin</td><td>Výroba barviv, léčiv, pryže; toxický!</td></tr>
+        <tr><td class="f-form"><strong>H₂N–(CH₂)₄–NH₂</strong></td><td>putrescin (1,4-diaminobutan)</td><td>Pach rozkladu (maso)</td></tr>
+        <tr><td class="f-form"><strong>H₂N–(CH₂)₅–NH₂</strong></td><td>kadaverin (1,5-diaminopentan)</td><td>Pach rozkladu</td></tr>
+        <tr><td class="f-form"><strong>H₂N–CH₂–COOH</strong></td><td>glycin</td><td>Nejjednodušší aminokyselina!</td></tr>
+      </table>
+
+      <h4>Reakce aminů</h4>
+      <div class="reaction"><span class="reac">R–NH₂ + HCl</span><span class="arr">──→</span><span class="prod">R–NH₃⁺Cl⁻</span> <span class="cond">(sůl aminu – rozpustná ve vodě)</span></div>
+      <div class="reaction"><span class="reac">R–NH₂ + R'–COOH</span><span class="arr">──→</span><span class="prod">R–NH–CO–R' + H₂O</span> <span class="cond">(amid – peptidová vazba v proteinech!)</span></div>
+      <div class="reaction"><span class="reac">C₆H₅NH₂ + HNO₂</span><span class="arr">──0°C──→</span><span class="prod">C₆H₅N₂⁺Cl⁻</span> <span class="cond">(diazoniová sůl → výroba azobarviv)</span></div>
+    </div>
+
+    <!-- 2.13 AMINOKYSELINY -->
+    <div class="section" id="aminokyseliny">
+      <h3>2.13 Aminokyseliny (AK)</h3>
+      <p class="subtitle">–NH₂ + –COOH na stejném C (α-aminokyseliny) | L-konfigurace (přirozená) | Amfoterní charakter</p>
+
+      <div class="card card-purple">
+        <h4 class="purple">Obecná struktura α-AK</h4>
+        <div class="chain-vis">
+          <div class="chain-row">    NH₂</div>
+          <div class="chain-row">     |</div>
+          <div class="chain-row">H – C – COOH</div>
+          <div class="chain-row">     |</div>
+          <div class="chain-row">     R (postranní řetězec)</div>
+          <div class="chain-label">α-uhlík nese: –NH₂, –COOH, –H a postranní řetězec R</div>
+        </div>
+      </div>
+
+      <h4>Esenciální aminokyseliny (EAK) – musí být v potravě!</h4>
+      <div class="memory">
+        <div class="mem-title">🧠 Mnemotechnika – 9 esenciálních AK (pro dospělé)</div>
+        <p><strong>„Hlídej, Lidi, Metanu: Fenyl Trp Iso-Val Thr Lys"</strong></p>
+        <p>= <strong>His</strong>tidin, <strong>Leu</strong>cin, <strong>Met</strong>ionin, <strong>Phe</strong>nylalanin, <strong>Trp</strong>tofan, <strong>Ile</strong>ucin, <strong>Val</strong>in, <strong>Thr</strong>eonin, <strong>Lys</strong>in</p>
+      </div>
+
+      <table class="tbl">
+        <tr><th>Zkratka (1/3)</th><th>Název</th><th>Skupina R</th><th>Klinický / Bioch. signifikant</th></tr>
+        <tr><td><strong>Gly / G</strong></td><td>glycin</td><td>–H</td><td>Nejmenší AK, nemá centrum chirality</td></tr>
+        <tr><td><strong>Ala / A</strong></td><td>alanin</td><td>–CH₃</td><td>Glukoneogeneze (alanin-glukózový cyklus)</td></tr>
+        <tr><td><strong>Val / V ✱</strong></td><td>valin</td><td>–CH(CH₃)₂</td><td>BCAA – sportovci</td></tr>
+        <tr><td><strong>Leu / L ✱</strong></td><td>leucin</td><td>–CH₂CH(CH₃)₂</td><td>BCAA, stimulace mTOR</td></tr>
+        <tr><td><strong>Ile / I ✱</strong></td><td>isoleucin</td><td>–CH(CH₃)CH₂CH₃</td><td>BCAA</td></tr>
+        <tr><td><strong>Pro / P</strong></td><td>prolin</td><td>cyklický (pyrrolidin)</td><td>Rigidita proteinů, kolagen!</td></tr>
+        <tr><td><strong>Phe / F ✱</strong></td><td>fenylalanin</td><td>–CH₂–C₆H₅</td><td>Prekurzor Tyr, dopaminu; PKU = deficit fenylalanin-hydroxyl.</td></tr>
+        <tr><td><strong>Tyr / Y</strong></td><td>tyrosin</td><td>–CH₂–C₆H₄–OH</td><td>Prekurzor dopaminu, tyroxinu, melaninu!</td></tr>
+        <tr><td><strong>Trp / W ✱</strong></td><td>tryptofan</td><td>indol</td><td>Prekurzor serotoninu, melatoninu, nikotinamidu</td></tr>
+        <tr><td><strong>Ser / S</strong></td><td>serin</td><td>–CH₂OH</td><td>Fosforylační místo, fosfolipidy</td></tr>
+        <tr><td><strong>Thr / T ✱</strong></td><td>threonin</td><td>–CHOH–CH₃</td><td>Fosforylační místo</td></tr>
+        <tr><td><strong>Cys / C</strong></td><td>cystein</td><td>–CH₂SH</td><td>Disulfidové můstky S–S v proteinech!</td></tr>
+        <tr><td><strong>Met / M ✱</strong></td><td>methionin</td><td>–CH₂CH₂SCH₃</td><td>Start translace (AUG), donor metyl. skupin (SAM)</td></tr>
+        <tr><td><strong>Asp / D</strong></td><td>kyselina asparagová</td><td>–CH₂COOH</td><td>Cyklus močoviny, malát-aspartátový člunek</td></tr>
+        <tr><td><strong>Glu / E</strong></td><td>kyselina glutamová</td><td>–(CH₂)₂COOH</td><td>Hlavní excitační neurotransmiter!</td></tr>
+        <tr><td><strong>Asn / N</strong></td><td>asparagin</td><td>–CH₂CONH₂</td><td>N-glykosylace</td></tr>
+        <tr><td><strong>Gln / Q</strong></td><td>glutamin</td><td>–(CH₂)₂CONH₂</td><td>Transport N, palivo enterocytů</td></tr>
+        <tr><td><strong>Lys / K ✱</strong></td><td>lysin</td><td>–(CH₂)₄NH₂</td><td>Kladně nabitý, crosslink kolagenu</td></tr>
+        <tr><td><strong>Arg / R</strong></td><td>arginin</td><td>guanidino skupina</td><td>Cyklus močoviny, syntéza NO!</td></tr>
+        <tr><td><strong>His / H ✱</strong></td><td>histidin</td><td>imidazol</td><td>Prekurzor histaminu (alergická reakce!), katalytická AK enzymů</td></tr>
+      </table>
+      <p style="font-size: 12px; color: var(--muted);">✱ = esenciální aminokyselina</p>
+
+      <h4>Peptidová vazba</h4>
+      <div class="card card-teal">
+        <h4 class="teal">Tvorba peptidové vazby</h4>
+        <div class="chain-vis">
+          <div class="chain-row">H₂N–CHR₁–COOH + H₂N–CHR₂–COOH</div>
+          <div class="chain-row">          ↓</div>
+          <div class="chain-row">H₂N–CHR₁–CO–NH–CHR₂–COOH + H₂O</div>
+          <div class="chain-label">Amidová vazba –CO–NH– = peptidová vazba | Planární, parciální dvojná vazba</div>
+        </div>
+      </div>
+
+      <h4>Izoelektrický bod (pI)</h4>
+      <div class="alert alert-blue">
+        <span class="ico">⚡</span>
+        <div>pI = pH, při kterém má AK nulový celkový náboj (existuje jako <strong>zwitterion</strong>). Pod pI → AK kladně nabitá, nad pI → záporně nabitá. Využití: elektroforéza bílkovin!</div>
+      </div>
+    </div>
+
+    <!-- 2.14 BÍLKOVINY -->
+    <div class="section" id="bilkoviny">
+      <h3>2.14 Bílkoviny (Proteiny)</h3>
+      <p class="subtitle">Polymery AK spojené peptidovými vazbami | 4 úrovně struktury</p>
+
+      <div class="cards">
+        <div class="card card-blue">
+          <h4 class="blue">1° Primární struktura</h4>
+          <p>Pořadí aminokyselin v peptidovém řetězci. Určena geneticky (sekvence DNA). Základ pro vyšší struktury.</p>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">2° Sekundární struktura</h4>
+          <p>α-helix a β-skládaný list. Stabilizovány <span class="hl-green">vodíkovými můstky</span> mezi –CO a –NH skupinami (v kostře).</p>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">3° Terciární struktura</h4>
+          <p>3D tvar jednoho polypeptidu. Disulfidové –S–S– můstky (Cys!), hydrofobní interakce, vodíkové můstky, iontové vazby.</p>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">4° Kvarterní struktura</h4>
+          <p>Asociace ≥2 polypeptidů. Příklad: hemoglobin (2α + 2β podjednotky), kolagen (trojná šroubovice).</p>
+        </div>
+      </div>
+
+      <h4>Denaturace bílkovin</h4>
+      <div class="alert alert-red">
+        <span class="ico">🔥</span>
+        <div>Denaturace = narušení vyšších struktur (2°, 3°, 4°) bez štěpení peptidových vazeb. Příčiny: <strong>teplo, kyseliny/zásady, organická rozpouštědla, detergenty, UV záření, těžké kovy.</strong> Příklad: vaření vajec (albuminů). Ireverzibilní (většinou)!</div>
+      </div>
+
+      <h4>Funkce bílkovin (přehled pro LF)</h4>
+      <table class="tbl">
+        <tr><th>Funkce</th><th>Příklady</th></tr>
+        <tr><td><strong>Enzymatická</strong></td><td>Amyláza, lipáza, pepsin, trypsin, DNA polymeráza</td></tr>
+        <tr><td><strong>Transportní</strong></td><td>Hemoglobin (O₂), albumin (MK, léky), transferin (Fe)</td></tr>
+        <tr><td><strong>Strukturní</strong></td><td>Kolagen (pojivová tkáň), keratin (vlasy, nehty), aktin, myosin</td></tr>
+        <tr><td><strong>Regulační</strong></td><td>Inzulín, glukagon, GH (hormony = bílkoviny/peptidy)</td></tr>
+        <tr><td><strong>Imunitní</strong></td><td>Protilátky (imunoglobuliny – IgG, IgM, IgA, IgE, IgD)</td></tr>
+        <tr><td><strong>Pohybová</strong></td><td>Myosin + aktin → svalová kontrakce</td></tr>
+        <tr><td><strong>Zásobní</strong></td><td>Feritin (Fe), kasein (mléko), ovalbumin (vejce)</td></tr>
+        <tr><td><strong>Receptorová</strong></td><td>Inzulínový receptor, adrenergní receptory</td></tr>
+      </table>
+    </div>
+
+    <!-- 2.15 SACHARIDY -->
+    <div class="section" id="sacharidy">
+      <h3>2.15 Sacharidy (cukry)</h3>
+      <p class="subtitle">Vzorec: Cₙ(H₂O)ₙ nebo Cₙ H₂ₙOₙ | Aldehydy nebo ketony s –OH skupinami | Primární energetický zdroj</p>
+
+      <div class="cards">
+        <div class="card card-yellow">
+          <h4 class="yellow">Monosacharidy</h4>
+          <ul>
+            <li>3C – triózy (glyceraldehyd)</li>
+            <li>5C – pentózy (ribóza, deoxyribóza)</li>
+            <li>6C – hexózy (<span class="hl-yellow">glukóza, fruktóza, galaktóza</span>)</li>
+          </ul>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">Disacharidy</h4>
+          <ul>
+            <li><span class="hl-orange">Sacharóza</span> = glukóza + fruktóza (α1→β2)</li>
+            <li><span class="hl-orange">Laktóza</span> = galaktóza + glukóza (β1→4)</li>
+            <li><span class="hl-orange">Maltóza</span> = glukóza + glukóza (α1→4)</li>
+            <li>Celobiosa = glukóza + glukóza (β1→4)</li>
+          </ul>
+        </div>
+        <div class="card card-red">
+          <h4 class="red">Polysacharidy</h4>
+          <ul>
+            <li><span class="hl-red">Škrob</span> – zásobní (rostliny): amylóza (α1→4) + amylopektin (+ α1→6)</li>
+            <li><span class="hl-red">Glykogen</span> – zásobní (živočichové, játra, svaly)</li>
+            <li><span class="hl-red">Celulóza</span> – strukturní (β1→4), nelze trávit!</li>
+            <li>Chitin – schránky hmyzu, houby</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Glukóza – detail (KLÍČOVÉ!)</h4>
+      <table class="tbl">
+        <tr><th>Vlastnost</th><th>Detail</th></tr>
+        <tr><td><strong>Vzorec</strong></td><td>C₆H₁₂O₆</td></tr>
+        <tr><td><strong>Otočení světla</strong></td><td>D-glukóza = pravotočivá (+52,7°); L-glukóza = levotočivá (přirozená je D!)</td></tr>
+        <tr><td><strong>Cyklická forma</strong></td><td>α-D-glukóza (OH dolů na C1) ⇌ β-D-glukóza (OH nahoru na C1) – mutarotace</td></tr>
+        <tr><td><strong>Normální hladina v krvi</strong></td><td>3,9–5,5 mmol/L (nalačno)</td></tr>
+        <tr><td><strong>Hyperglykémie</strong></td><td>&gt;7 mmol/L nalačno → DM</td></tr>
+        <tr><td><strong>Hypoglykémie</strong></td><td>&lt;3,3 mmol/L → mozek!</td></tr>
+        <tr><td><strong>Redukující</strong></td><td>ANO – reaguje s Fehlingovým/Tollensovým čidlem (volný anomerní OH)</td></tr>
+      </table>
+
+      <h4>D-glukóza vs D-fruktóza vs D-galaktóza</h4>
+      <div class="formula-box">
+        <div class="label">Epimery a izomery hexóz</div>
+        <span class="f-name">D-glukóza</span> <span class="f-form">aldohexóza, C1 je –CHO</span> <span class="f-note">→ krev, glykolýza</span><br>
+        <span class="f-name">D-fruktóza</span> <span class="f-form">ketohexóza, C2 je C=O</span>  <span class="f-note">→ ovoce, med, sperma</span><br>
+        <span class="f-name">D-galaktóza</span><span class="f-form">aldohexóza, epimer glukózy na C4</span><span class="f-note">→ laktóza, galaktosémie</span><br>
+        <span class="f-name">D-manóza</span>  <span class="f-form">aldohexóza, epimer glukózy na C2</span><span class="f-note">→ glykoprotein syntéza</span>
+      </div>
+
+      <h4>Glykosidická vazba</h4>
+      <div class="reaction"><span class="reac">α-D-Glukóza + α-D-Glukóza</span><span class="arr">──α(1→4)──→</span><span class="prod">Maltóza + H₂O</span></div>
+      <div class="reaction"><span class="reac">α-D-Glukóza + β-D-Fruktóza</span><span class="arr">──α(1→β2)──→</span><span class="prod">Sacharóza + H₂O</span> <span class="cond">(NEREDUKUJÍCÍ!)</span></div>
+
+      <h4>Testy sacharidů</h4>
+      <div class="two-col">
+        <div class="card card-blue">
+          <h4 class="blue">Molischův test</h4>
+          <p>Obecný test na sacharidy. α-naftol + H₂SO₄ → fialový kroužek. Pozitivní pro <em>všechny</em> sacharidy.</p>
+        </div>
+        <div class="card card-red">
+          <h4 class="red">Fehlingův test</h4>
+          <p>Test na <em>redukující</em> sacharidy (glukóza, fruktóza, maltóza, laktóza). Cu²⁺ → Cu₂O↓ (červená). Sacharóza = NEGATIVNÍ!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2.16 NUKLEOVÉ KYSELINY -->
+    <div class="section" id="nukleky">
+      <h3>2.16 Nukleové kyseliny</h3>
+      <p class="subtitle">Polymery nukleotidů | DNA (deoxyribonukleová) a RNA (ribonukleová)</p>
+
+      <div class="two-col">
+        <div class="card card-blue">
+          <h4 class="blue">🧬 DNA</h4>
+          <ul>
+            <li>Deoxyribóza (C2'–OH chybí)</li>
+            <li>Báze: <span class="hl-blue">A, T, G, C</span></li>
+            <li>Dvojvláknová šroubovice (Watson-Crick)</li>
+            <li>A–T (2 vodík. můstky)</li>
+            <li>G–C (3 vodík. můstky)</li>
+            <li>Jádro, mitochondrie</li>
+          </ul>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">🔬 RNA</h4>
+          <ul>
+            <li>Ribóza (C2'–OH přítomno)</li>
+            <li>Báze: <span class="hl-green">A, U, G, C</span> (U místo T)</li>
+            <li>Jednovláknová (zpravidla)</li>
+            <li>mRNA, tRNA, rRNA, miRNA…</li>
+            <li>Přenáší genetickou informaci</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Nukleotid – stavební jednotka</h4>
+      <div class="card card-purple">
+        <h4 class="purple">Nukleotid = fosfát + cukr + báze</h4>
+        <p>Dusíkaté báze: <strong>Puriny</strong> (A, G – dvě kruhy) a <strong>Pyrimidiny</strong> (C, T, U – jeden kruh)</p>
+        <p style="margin-top: 8px;">ATP = adenin + ribóza + 3× fosfát → <span class="hl-green">energetická měna buňky!</span></p>
+        <p>GTP, CTP, UTP = podobné role</p>
+        <p>cAMP = druhý posel (signalizace)</p>
+      </div>
+
+      <h4>Důležité nukleotidy a koenzymi</h4>
+      <table class="tbl">
+        <tr><th>Zkratka</th><th>Plný název</th><th>Funkce</th></tr>
+        <tr><td><strong>ATP</strong></td><td>adenosin-5'-trifosfát</td><td>Energetická měna buňky</td></tr>
+        <tr><td><strong>NAD⁺/NADH</strong></td><td>nikotinamid-adenin-dinukleotid</td><td>Přenos H (redukčních ekvivalentů) v metabolismu</td></tr>
+        <tr><td><strong>NADP⁺/NADPH</strong></td><td>—fosfát</td><td>Biosyntézy (pentózový cyklus)</td></tr>
+        <tr><td><strong>FAD/FADH₂</strong></td><td>flavin-adenin-dinukleotid</td><td>Přenos H, oxidativní fosforylace</td></tr>
+        <tr><td><strong>CoA</strong></td><td>koenzym A</td><td>Přenos acylů (acetyl-CoA → Krebsův cyklus)</td></tr>
+        <tr><td><strong>cAMP</strong></td><td>cyklický AMP</td><td>Druhý posel, aktivace PKA</td></tr>
+      </table>
+    </div>
+
+    <!-- 2.17 ENZYMY -->
+    <div class="section" id="enzymy">
+      <h3>2.17 Enzymy</h3>
+      <p class="subtitle">Biologické katalyzátory (bílkovinné povahy) | Snižují aktivační energii | Vysoce specifické</p>
+
+      <div class="two-col">
+        <div class="card card-green">
+          <h4 class="green">Vlastnosti enzymů</h4>
+          <ul>
+            <li>Bílkoviny (+ kofaktory)</li>
+            <li>Substrátová specifita (lock & key nebo induced fit)</li>
+            <li>pH a teplotní optimum</li>
+            <li>Denatuarce = inaktivace</li>
+            <li>Katalyzují oba směry (Keq nemění)</li>
+          </ul>
+        </div>
+        <div class="card card-orange">
+          <h4 class="orange">Kofaktory & Koenzymy</h4>
+          <ul>
+            <li>Kofaktor = ion kovu (Fe²⁺, Mg²⁺, Zn²⁺…)</li>
+            <li>Koenzym = organická molekula (NAD⁺, FAD, CoA, vitamíny!)</li>
+            <li>Holoenzym = apoenzym + kofaktor</li>
+          </ul>
+        </div>
+      </div>
+
+      <h4>Třídy enzymů (IUB nomeklatura)</h4>
+      <table class="tbl">
+        <tr><th>Třída</th><th>Funkce</th><th>Příklady</th></tr>
+        <tr><td><span class="hl-red">1. Oxidoreduktázy</span></td><td>Redoxní reakce</td><td>Alkohol-dehydrogenáza, LDH, cytochrom oxidáza</td></tr>
+        <tr><td><span class="hl-blue">2. Transferázy</span></td><td>Přenos skupin</td><td>Aminotransferázy (ALT, AST!), kinázy</td></tr>
+        <tr><td><span class="hl-green">3. Hydrolázy</span></td><td>Hydrolýza</td><td>Lipázy, proteázy (pepsin, trypsin), amyláza</td></tr>
+        <tr><td><span class="hl-orange">4. Lyázy</span></td><td>Odštěpení bez hydrolýzy</td><td>Pyruvát-dekarboxyláza, aldoláza</td></tr>
+        <tr><td><span class="hl-purple">5. Izomerázy</span></td><td>Izomerizace</td><td>Fosfoglukóza-izomeráza, mutázy</td></tr>
+        <tr><td><span class="hl-teal">6. Ligázy</span></td><td>Spojování + ATP</td><td>DNA-ligáza, synthetázy (karboxylace)</td></tr>
+      </table>
+
+      <h4>Inhibice enzymů</h4>
+      <div class="cards">
+        <div class="card card-red">
+          <h4 class="red">Kompetitivní inhibice</h4>
+          <ul>
+            <li>Inhibitor se váže na aktivní místo</li>
+            <li>Soutěží se substrátem</li>
+            <li>Kmáx nemění, Km roste</li>
+            <li>Překonatelná ↑[S]</li>
+            <li>Příklad: statiny (HMG-CoA reduktáza)</li>
+          </ul>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">Nekompetitivní inhibice</h4>
+          <ul>
+            <li>Inhibitor na allosterickém místě</li>
+            <li>Kmáx klesá, Km nemění</li>
+            <li>Nelze překonat ↑[S]</li>
+            <li>Příklad: kyanid (cytochrom oxidáza)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="alert alert-red">
+        <span class="ico">🩺</span>
+        <div><strong>LF klíč – enzymy v klinické praxi!</strong> ALT, AST (játra), amyláza/lipáza (pankreas), troponin, CK-MB (srdce), ALP, GGT (cholestáza), LDH (nespecifické poškození tkání) – enzymy jako markery poškození orgánů!</div>
+      </div>
+    </div>
+
+    <!-- 2.18 VITAMÍNY -->
+    <div class="section" id="vitaminy">
+      <h3>2.18 Vitamíny</h3>
+
+      <h4>Vitamíny rozpustné v tucích (ADEK)</h4>
+      <table class="tbl">
+        <tr><th>Vitamín</th><th>Chemický název</th><th>Funkce</th><th>Deficit</th></tr>
+        <tr><td><span class="hl-orange"><strong>A</strong></span></td><td>retinol</td><td>Zrak (rodopsin), diferenciace buněk, imunita</td><td>Šeroslepost, xeroftalmie</td></tr>
+        <tr><td><span class="hl-yellow"><strong>D</strong></span></td><td>kalciferol (D₂/D₃)</td><td>Metabolismus Ca a P, mineralizace kostí</td><td>Rachitida (děti), osteomalácie</td></tr>
+        <tr><td><span class="hl-green"><strong>E</strong></span></td><td>tokoferol</td><td>Antioxidant, ochrana membrán</td><td>Vzácný, neuropatie</td></tr>
+        <tr><td><span class="hl-red"><strong>K</strong></span></td><td>fyllochi/menachinon</td><td>Koagulace (aktivace faktorů II,VII,IX,X), osteokalcin</td><td>Krvácivost, prodloužení PT</td></tr>
+      </table>
+
+      <h4>Vitamíny rozpustné ve vodě (B-komplex + C)</h4>
+      <table class="tbl">
+        <tr><th>Vitamín</th><th>Chem. název</th><th>Koenzym / Funkce</th><th>Deficit</th></tr>
+        <tr><td><strong>B₁</strong></td><td>thiamin</td><td>TPP – pyruvát-dehydrogenáza, α-KG-DH</td><td>Beriberi, Wernickeova encefalopatie (EtOH!)</td></tr>
+        <tr><td><strong>B₂</strong></td><td>riboflavin</td><td>FMN, FAD – přenos H</td><td>Angulární stomatitida, cheilóza</td></tr>
+        <tr><td><strong>B₃</strong></td><td>niacin (nikotinamid)</td><td>NAD⁺, NADP⁺</td><td>Pelagra (3D: dermatitis, demence, diarrhoea)</td></tr>
+        <tr><td><strong>B₅</strong></td><td>kys. pantothenová</td><td>CoA – metabolismus MK, Krebsův cyklus</td><td>Vzácný</td></tr>
+        <tr><td><strong>B₆</strong></td><td>pyridoxin</td><td>PLP – transaminázy, dekarboxylace AK</td><td>Periferní neuropatie</td></tr>
+        <tr><td><strong>B₇</strong></td><td>biotin</td><td>Karboxylace (pyruvát→oxaloacetát)</td><td>Dermatitida, alopecie (syrový bílek!)</td></tr>
+        <tr><td><strong>B₉</strong></td><td>kys. listová (folát)</td><td>Přenos 1C skupin, syntéza purinů a thymidinu</td><td>Megaloblastická anémie, defekty NTD v těhotenství!</td></tr>
+        <tr><td><strong>B₁₂</strong></td><td>kobalamin</td><td>Přenos metylových skupin (s folátem), metabolismus MMA</td><td>Megaloblastická anémie, subakutní kombinovaná degenerace míchy</td></tr>
+        <tr><td><strong>C</strong></td><td>kys. askorbová</td><td>Antioxidant, hydroxyláce prolinu (kolagen!), imunita</td><td>Kurděje (scurvy)</td></tr>
+      </table>
+
+      <div class="memory">
+        <div class="mem-title">🧠 Vitamíny rozpustné v tucích</div>
+        <p><strong>„A D E K"</strong> = <strong>„A Den Každý"</strong> nebo <strong>„All Dogs Eat Kibble"</strong></p>
+        <p>Hromadí se v organismu (možná toxicita A a D při předávkování!)</p>
+      </div>
+    </div>
+
+  </div><!-- /chapter-body -->
+</div><!-- /chapter org -->
+
+
+<!-- ████████ III. METABOLISMUS – PŘEHLED ████████ -->
+<div class="chapter ch-bio" id="biomol">
+  <div class="chapter-header">
+    <span class="icon">🔬</span>
+    <div>
+      <div class="num">Kapitola III</div>
+      <h2>Metabolismus – Biochemický přehled pro LF</h2>
+    </div>
+  </div>
+  <div class="chapter-body">
+
+    <div class="section">
+      <h3>3.1 Glykolýza</h3>
+      <p class="subtitle">Anaerobn/aerobní rozklad glukózy | Cytoplazma | 10 enzymových kroků</p>
+
+      <div class="formula-box">
+        <div class="label">Celková rovnice glykolýzy</div>
+        <span class="f-form">Glukóza + 2 NAD⁺ + 2 ADP + 2 Pᵢ → 2 Pyruvát + 2 NADH + 2 ATP + 2 H₂O</span>
+      </div>
+
+      <div class="two-col">
+        <div class="card card-red">
+          <h4 class="red">Regulační enzymy glykolýzy</h4>
+          <ul>
+            <li>Hexokináza (krok 1) – inhibice G6P</li>
+            <li><strong>Fosfofrukto-kináza-1</strong> (krok 3) – <em>hlavní regulátor!</em></li>
+            <li>Pyruvát kináza (krok 10)</li>
+          </ul>
+        </div>
+        <div class="card card-green">
+          <h4 class="green">Osud pyruvátu</h4>
+          <ul>
+            <li>Aerobně → acetyl-CoA (PDH komplex) → Krebsův cyklus</li>
+            <li>Anaerobně (svaly) → laktát (LDH)</li>
+            <li>Anaerobně (kvasinky) → ethanol + CO₂</li>
+            <li>Glukoneogeneze → oxaloacetát</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>3.2 Krebsův cyklus (cyklus trikarboxylových kyselin, TCA)</h3>
+      <p class="subtitle">Mitochondrie | Oxidace acetyl-CoA | Zisk: 3 NADH + 1 FADH₂ + 1 GTP / otočení</p>
+
+      <div class="formula-box">
+        <div class="label">Hlavní produkty (1 otočení cyklu)</div>
+        <span class="f-form">Acetyl-CoA (2C) + Oxaloacetát (4C) → Citrát (6C)</span><br>
+        <span class="f-form">→ 2× CO₂ uvolněno, 3 NADH, 1 FADH₂, 1 GTP</span><br>
+        <span class="f-form">Oxaloacetát se regeneruje</span>
+      </div>
+
+      <h4>Meziprodukty Krebsova cyklu (musíš znát!)</h4>
+      <div class="formula-box">
+        <div class="label">Pořadí meziproduktů TCA cyklu</div>
+        <span class="f-name">Oxaloacetát (4C)</span><span class="f-form"> + acetyl-CoA →</span><br>
+        <span class="f-name">Citrát (6C)</span><span class="f-form"> → Isocitrát → α-Ketoglutarát (5C) →</span><br>
+        <span class="f-name">Sukcinyl-CoA (4C)</span><span class="f-form"> → Sukcínát → Fumarát → Malát → Oxaloacetát</span>
+      </div>
+
+      <div class="memory">
+        <div class="mem-title">🧠 Mnemotechnika Krebsova cyklu</div>
+        <p><strong>"Citronela, Izoluje α-Kety, Sukni Fu-malátku."</strong></p>
+        <p>= <strong>Ci</strong>trát, <strong>Iso</strong>citrát, <strong>α-K</strong>etoglutarát, <strong>Su</strong>kcinyl-CoA, <strong>Su</strong>kcínát, <strong>Fu</strong>marát, <strong>Ma</strong>lát, Oxaloacetát</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>3.3 Oxidativní fosforylace & Dýchací řetězec</h3>
+      <div class="card card-teal">
+        <h4 class="teal">Výsledek celkové oxidace glukózy</h4>
+        <div class="formula-box">
+          <div class="label">Celková rovnice buněčného dýchání</div>
+          <span class="f-form">C₆H₁₂O₆ + 6 O₂ → 6 CO₂ + 6 H₂O + ~30-32 ATP</span>
+        </div>
+        <ul>
+          <li>Glykolýza: 2 ATP (netto)</li>
+          <li>Pyruvát-DH: 0 ATP (ale 2 NADH)</li>
+          <li>Krebsův cyklus: 2 GTP + 6 NADH + 2 FADH₂</li>
+          <li>OXPHOS: NADH → ~2,5 ATP; FADH₂ → ~1,5 ATP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>3.4 Metabolismus lipidů</h3>
+      <div class="two-col">
+        <div class="card card-orange">
+          <h4 class="orange">β-oxidace MK</h4>
+          <ul>
+            <li>Mitochondrie</li>
+            <li>C₁₆ (palmitoyl-CoA) → 7 otočení</li>
+            <li>Produkt: acetyl-CoA + NADH + FADH₂</li>
+            <li>Palmitát (C16): 106 ATP netto!</li>
+          </ul>
+        </div>
+        <div class="card card-purple">
+          <h4 class="purple">Ketogeneze</h4>
+          <ul>
+            <li>Játra, při hladovění / DM</li>
+            <li>Acetyl-CoA → ketonická tělesa</li>
+            <li>β-hydroxybutyrát, acetoacetát, aceton</li>
+            <li>Mozek je využívá při hladovění</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- REAKCE -->
+    <div class="section" id="reakce">
+      <h3>3.5 Přehled typů chemických reakcí (organika)</h3>
+
+      <table class="tbl">
+        <tr><th>Typ reakce</th><th>Symbol</th><th>Příklad</th><th>Typické pro</th></tr>
+        <tr><td><span class="hl-blue">Adice (A)</span></td><td>+</td><td>alken + HBr → bromalkan</td><td>Alkeny, alkyny</td></tr>
+        <tr><td><span class="hl-red">Substituce (S)</span></td><td></td><td>alkan + Cl₂ → chloralkan + HCl</td><td>Alkany (SR), areny (SEAr, SNAr)</td></tr>
+        <tr><td><span class="hl-orange">Eliminace (E)</span></td><td></td><td>bromalkan + NaOH/alc → alken</td><td>Halogenderiváty, alkoholy</td></tr>
+        <tr><td><span class="hl-green">Oxidace [O]</span></td><td>[O]</td><td>alkohol → aldehyd → kyselina</td><td>Všude</td></tr>
+        <tr><td><span class="hl-purple">Redukce [H]</span></td><td>[H]</td><td>alken + H₂ → alkan</td><td>Alkeny, karbonyly</td></tr>
+        <tr><td><span class="hl-teal">Esterifikace</span></td><td></td><td>R-COOH + R'-OH → ester + H₂O</td><td>Kys. + alkohol</td></tr>
+        <tr><td><span class="hl-yellow">Saponifikace</span></td><td></td><td>tuk + NaOH → glycerol + mýdlo</td><td>Tuky, estery</td></tr>
+        <tr><td><span class="hl-red">Polymerizace</span></td><td>n×</td><td>n CH₂=CH₂ → (–CH₂–CH₂–)ₙ (PE)</span></td><td>Alkeny, alkadeny</td></tr>
+      </table>
+
+      <h4>Radikálová substituce (SR) – mechanismus</h4>
+      <div class="formula-box">
+        <div class="label">Příklad: chlorace methanu (3 kroky)</div>
+        <span class="f-name">Iniciace:</span>  <span class="f-form">Cl₂ ──hν──→ 2 Cl•</span><br>
+        <span class="f-name">Propagace:</span> <span class="f-form">Cl• + CH₄ → HCl + CH₃•</span><br>
+        <span class="f-form">            CH₃• + Cl₂ → CH₃Cl + Cl•</span><br>
+        <span class="f-name">Terminace:</span> <span class="f-form">Cl• + Cl• → Cl₂ (nebo jiné kombinace)</span>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /chapter bio -->
+
+
+<!-- ████████ RYCHLÝ PŘEHLED ████████ -->
+<div class="chapter" id="prehled" style="margin-top: 70px;">
+  <div class="chapter-header" style="background: linear-gradient(135deg, #b8860b, #8b6914);">
+    <span class="icon">⚡</span>
+    <div>
+      <div class="num">Bonus</div>
+      <h2>Rychlý přehled – Nejčastější maturitní/přijímačkové otázky</h2>
+    </div>
+  </div>
+  <div class="chapter-body">
+
+    <div class="cards">
+      <div class="card card-yellow">
+        <h4 class="yellow">🎯 Nejdůležitější vzorce k pamětí</h4>
+        <ul>
+          <li>CH₄ – metan; C₂H₄ – ethen; C₂H₂ – ethyn</li>
+          <li>C₆H₆ – benzen; C₆H₁₂O₆ – glukóza</li>
+          <li>C₂H₅OH – ethanol; CH₃COOH – octová kys.</li>
+          <li>H₂SO₄, HCl, HNO₃, H₃PO₄</li>
+          <li>NaOH, Ca(OH)₂, KOH</li>
+          <li>NaCl, CaCO₃, NaHCO₃, CaSO₄</li>
+        </ul>
+      </div>
+      <div class="card card-green">
+        <h4 class="green">🎯 Biochemie pro LF</h4>
+        <ul>
+          <li>Glykolýza: 2 ATP netto</li>
+          <li>Celková oxidace: ~30-32 ATP</li>
+          <li>Esenciální MK: linolová (ω-6), linolenová (ω-3)</li>
+          <li>Esenciální AK: 9 (His, Ile, Leu, Lys, Met, Phe, Thr, Trp, Val)</li>
+          <li>pH krve: 7,35–7,45</li>
+          <li>Glykémie: 3,9–5,5 mmol/L</li>
+        </ul>
+      </div>
+      <div class="card card-red">
+        <h4 class="red">⚠️ Záměny a pasti</h4>
+        <ul>
+          <li>Methanol ≠ ethanol (methanol = JED!)</li>
+          <li>Fehling → pouze ALDEHYDY (ne ketony)</li>
+          <li>Sacharóza je NEREDUKUJÍCÍ cukr</li>
+          <li>Celulóza β1→4 (nelze trávit), škrob α1→4</li>
+          <li>Fe²⁺ v Hb (ne Fe³⁺ = methemoglobin)</li>
+          <li>DNA: A–T, G–C (RNA: A–U, G–C)</li>
+        </ul>
+      </div>
+      <div class="card card-purple">
+        <h4 class="purple">📚 Klíčové pojmy</h4>
+        <ul>
+          <li>Peptidová vazba = amidová (–CO–NH–)</li>
+          <li>Disulfidový můstek = Cys–S–S–Cys</li>
+          <li>Denaturace ≠ hydrolýza</li>
+          <li>Zwitterion = amfoterní ion AK</li>
+          <li>Mutarotace = změna α⇌β formy</li>
+          <li>Anomery = lišia se na C1 (glukosy)</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align: center; margin-top: 60px; padding: 40px; color: var(--muted); font-size: 13px; border-top: 1px solid var(--border);">
+  <p>⚗️ Chemie – Maturitní poznámky | Vytvořeno pro přípravu na maturitu a přijímačky na LF</p>
+  <p style="margin-top: 8px;">Hodně štěstí! 🍀 Dobrá příprava je polovičním úspěchem.</p>
+</div>
+
+</div><!-- /container -->
+</body>
+</html>
